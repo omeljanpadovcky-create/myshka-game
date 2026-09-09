@@ -111,6 +111,9 @@ h2{font-size:29px;letter-spacing:-1px;line-height:1.1;margin:0 0 16px}
 #quest-summary{color:#bfd9c7;font-size:12px;line-height:1.6}#reward-choice{width:100%;max-width:100%;background:#254e43;color:#fff1d2;border:1px solid #aacb9c66;border-radius:12px;padding:10px;font:inherit;font-size:13px}#quests h2{font-size:26px}#quests .setting-note{margin:10px 0}
 #run-missions{font-size:11px;color:#d5e9ce;line-height:1.6;margin:12px 0}
 @media(max-height:700px){#menu .menu-bottom{display:none}#menu #quests-open{min-height:35px;padding:7px}}
+
+.wardrobe-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.wardrobe-tabs button{padding:10px 6px;border-radius:12px;background:#244c42;border:1px solid #9cc59a44;font-weight:750;font-size:13px}.wardrobe-tabs button[aria-pressed="true"]{background:#ffda8c;color:#234836;border-color:#ffe8b0}
+.accessory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}.accessory-card{min-width:0;background:#254e43;border:1px solid #86ab7955;border-radius:16px;padding:10px 5px;display:flex;flex-direction:column;align-items:center;gap:7px}.accessory-card.equipped{border:2px solid #ffd383;background:#3b6550}.accessory-art{font-size:32px;line-height:1.2}.accessory-card strong{font-size:12px;min-height:30px;display:grid;place-items:center}.accessory-card small{color:#ffdc8e;font-size:11px}.accessory-card button{width:100%;border-radius:9px;padding:8px 3px;font-size:11px;font-weight:750;background:#ffda8c;color:#204737}.accessory-card button:disabled{background:#345d4d;color:#c9d8bd;opacity:1}#accessory-remove{margin:0 0 12px;min-height:35px;padding:8px 16px;font-size:12px}#accessory-equipped{font-size:12px;color:#ffe0a3;margin:8px 0}
 </style>
 </head>
 <body>
@@ -146,22 +149,22 @@ h2{font-size:29px;letter-spacing:-1px;line-height:1.1;margin:0 0 16px}
 <div class="badge">Твій рекорд <span id="menu-best">0 м</span></div>
 <div class="actions"><button id="play" class="primary">Побігли! →</button><button id="skins-open" class="secondary">Скін: <span id="skin-current">Лісова</span> 🐭</button><button id="help-open" class="secondary">Як грати</button><button id="settings-open" class="secondary">Налаштування</button><button id="quests-open" class="secondary">🏅 Завдання та нагороди</button></div><div class="menu-bottom">Кожні 100 🧀 = вищий темп + 20 с суперстрибків</div>
 </section>
-<section id="skins" class="panel skin-panel" hidden aria-label="Скіни Мишки"><h2>Твоя Мишка</h2><p class="skin-intro">Збирай сир у забігах і відкривай нові образи. Сир не витрачається.</p><p id="skin-total" class="skin-intro">Усього зібрано: 0 🧀</p><div id="skin-preview" role="img" aria-label="3D-перегляд вибраного скіна"></div><p id="skin-name">Лісова</p><div class="skin-grid" role="group" aria-label="Вибери скін">
+<section id="skins" class="panel skin-panel" hidden aria-label="Скіни Мишки"><h2>Твоя Мишка</h2><p class="skin-intro">Скіни та аксесуари за сир. Покупка назавжди — повторний вибір безкоштовний.</p><div class="wardrobe-tabs" role="group" aria-label="Категорія магазину"><button id="wardrobe-skins" aria-pressed="true" aria-controls="skin-cards">🐭 Скіни</button><button id="wardrobe-accessories" aria-pressed="false" aria-controls="accessory-shop">🧣 Аксесуари</button></div><p id="skin-total" class="skin-intro">Усього зібрано: 0 🧀</p><div id="skin-preview" role="img" aria-label="3D-перегляд вибраного скіна"></div><p id="skin-name">Лісова</p><div id="skin-cards" class="skin-grid" role="group" aria-label="Вибери скін">
 <button id="skin-classic" class="skin-choice" aria-pressed="true" style="--fur:#9e9992;--ear:#d8a29f"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Лісова</span><small id="skin-cost-classic" class="skin-cost"></small></button>
 <button id="skin-snow" class="skin-choice" aria-pressed="false" style="--fur:#eee8dc;--ear:#eeafbd"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Сніжна</span><small id="skin-cost-snow" class="skin-cost"></small></button>
 <button id="skin-ginger" class="skin-choice" aria-pressed="false" style="--fur:#d69a58;--ear:#e2ad9b"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Руда</span><small id="skin-cost-ginger" class="skin-cost"></small></button>
 <button id="skin-night" class="skin-choice" aria-pressed="false" style="--fur:#68738b;--ear:#b99dbc"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Нічна</span><small id="skin-cost-night" class="skin-cost"></small></button>
 <button id="skin-lavender" class="skin-choice" aria-pressed="false" style="--fur:#b7a0cf;--ear:#e4b3d3"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Лавандова</span><small id="skin-cost-lavender" class="skin-cost"></small></button>
 <button id="skin-golden" class="skin-choice" aria-pressed="false" style="--fur:#e4c56c;--ear:#dbab84"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Золота</span><small id="skin-cost-golden" class="skin-cost"></small></button>
-</div><button id="skins-back" class="primary" style="width:100%">Готово →</button></section>
+</div><div id="accessory-shop" hidden><p id="accessory-equipped"></p><div class="accessory-grid"><article id="accessory-card-scarf" class="accessory-card"><span class="accessory-art" aria-hidden="true">🧣</span><strong>Шарфик</strong><small id="accessory-price-scarf"></small><button id="accessory-get-scarf">Купити</button></article><article id="accessory-card-hat" class="accessory-card"><span class="accessory-art" aria-hidden="true">👒</span><strong>Капелюшок</strong><small id="accessory-price-hat"></small><button id="accessory-get-hat">Купити</button></article><article id="accessory-card-basket" class="accessory-card"><span class="accessory-art" aria-hidden="true">🧺</span><strong>Золотий кошик</strong><small id="accessory-price-basket"></small><button id="accessory-get-basket">Купити</button></article></div><button id="accessory-remove" class="secondary">Зняти аксесуар</button></div><button id="skins-back" class="primary" style="width:100%">Готово →</button></section>
 <section id="help" class="panel card" hidden><h2>Як грати</h2><ul class="help-list">
 <li><span class="help-symbol">↔</span><span><strong>Зміни смугу</strong>Свайпни вбік або натисни стрілку.</span></li>
 <li><span class="help-symbol">↑</span><span><strong>Перестрибни</strong>Свайп вгору, дотик до гри або кнопка «Стрибок».</span></li>
 <li><span class="help-symbol">🧀</span><span><strong>100 сиру = два бонуси</strong>Вищий темп до кінця забігу та 20 секунд стрибків удвічі вище. Розгін плавний. З бонусом можна перестрибнути й фургон! Дерева оминай.</span></li>
-<li><span class="help-symbol">🧲</span><span><strong>Отримуй бонуси</strong>На 1500, 3000, 4500 м і далі магніт автоматично вмикається на 12 секунд. Виконай усі три завдання за один забіг, щоб отримати щит від одного зіткнення.</span></li><li><span class="help-symbol">🏅</span><span><strong>Виконуй завдання</strong>50 сирів, 1000 м або 10 перестрибнутих колод за забіг відкривають аксесуари.</span></li><li><span class="help-symbol">♥</span><span><strong>Бережи три життя</strong>Після помилки Лев стає ближче.</span></li></ul><button id="help-back" class="primary" style="width:100%">Зрозуміло</button><p class="menu-bottom">Клавіатура: ← →, ↑ або пробіл · Esc — пауза</p></section>
-<section id="quests" class="panel card" hidden><p class="kicker">Маленькі перемоги</p><h2>Завдання та нагороди</h2><p id="quest-summary">Виконай кожне завдання за один забіг.</p><div id="quest-list"></div><p class="setting-note">Досягнення залишаються назавжди. Прогрес завдань починається з нуля в кожному забігу. Усі три виконані завдання дають один щит за забіг.</p><label class="setting" for="reward-choice">Аксесуар</label><select id="reward-choice"></select><button id="quests-back" class="primary" style="width:100%;margin-top:16px">У меню</button></section>
+<li><span class="help-symbol">🧲</span><span><strong>Отримуй бонуси</strong>На 1500, 3000, 4500 м і далі магніт автоматично вмикається на 12 секунд. Виконай будь-які три завдання за один забіг, щоб отримати щит від одного зіткнення.</span></li><li><span class="help-symbol">🏅</span><span><strong>Виконуй завдання</strong>12 завдань на сир, відстань і стрибки. Кожне дає +100 сиру до загального запасу один раз за забіг. Скіни й аксесуари купуються за сир із балансу.</span></li><li><span class="help-symbol">♥</span><span><strong>Бережи три життя</strong>Після помилки Лев стає ближче.</span></li></ul><button id="help-back" class="primary" style="width:100%">Зрозуміло</button><p class="menu-bottom">Клавіатура: ← →, ↑ або пробіл · Esc — пауза</p></section>
+<section id="quests" class="panel card" hidden><p class="kicker">Маленькі перемоги</p><h2>Завдання та нагороди</h2><p id="quest-summary">Виконай кожне завдання за один забіг.</p><div id="quest-list"></div><p class="setting-note">Кожне завдання дає +100 сиру один раз за забіг. У новому забігу можна виконати його знову. Будь-які три завдання дають один щит. Нагородний сир додається до загального запасу, а не до сиру на стежці.</p><p class="setting-note">Скіни й аксесуари купуються за сир: ціна списується з балансу. Куплені речі залишаються назавжди, повторний вибір безкоштовний. Раніше відкриті речі збережено.</p><label class="setting" for="reward-choice">Аксесуар</label><select id="reward-choice"></select><button id="accessory-buy" class="secondary" style="width:100%;margin-top:10px">Одягнути</button><button id="quests-back" class="primary" style="width:100%;margin-top:16px">Назад</button></section>
 <section id="settings" class="panel card" hidden><h2>Налаштування</h2><label class="setting" for="quality">Графіка<select id="quality"><option value="auto">Авто</option><option value="low">Економна</option><option value="high">Висока</option></select></label><label class="setting" for="sound-enabled">Звуки лісу та гри<input id="sound-enabled" type="checkbox" checked></label><label class="setting" for="vibration">Вібрація<input id="vibration" type="checkbox" checked></label><p id="vibration-note" class="setting-note">Короткий відгук при стрибку та зіткненні.</p><div class="actions"><button id="fullscreen" class="secondary">На весь екран</button><button id="settings-back" class="primary">Готово</button></div></section>
-<section id="paused" class="panel card" hidden><p class="kicker">Можна перевести подих</p><h2>Пауза</h2><div class="actions"><button id="resume" class="primary">Продовжити</button><button id="restart" class="secondary">Спочатку</button><button id="pause-settings" class="secondary">Налаштування</button><button id="pause-menu" class="secondary">У меню</button></div></section>
+<section id="paused" class="panel card" hidden><p class="kicker">Можна перевести подих</p><h2>Пауза</h2><div class="actions"><button id="resume" class="primary">Продовжити</button><button id="restart" class="secondary">Спочатку</button><button id="pause-quests" class="secondary">Завдання та аксесуари</button><button id="pause-settings" class="secondary">Налаштування</button><button id="pause-menu" class="secondary">У меню</button></div></section>
 <section id="over" class="panel card" hidden><p class="kicker">Ще одна лісова пригода</p><h2>Лев наздогнав!</h2><div id="run-missions"></div><p id="new-record" class="record-label" hidden>НОВИЙ РЕКОРД ✨</p><div class="result-number"><span id="result-distance">0</span><span style="font-size:20px;letter-spacing:0"> м</span></div><p class="result-sub">Зібрано сиру: <strong id="result-cheese">0</strong></p><div class="actions"><button id="again" class="primary">Ще один забіг →</button><button id="over-menu" class="secondary">У меню</button></div></section>
 <section id="error" class="panel card" hidden><h2>3D недоступне</h2><p id="error-text" class="tagline">Відкрий цей файл у Chrome або Edge.</p><button id="reload" class="primary">Спробувати знову</button></section>
 </div><div id="announce" class="sr" aria-live="polite"></div>
@@ -189,7 +192,7 @@ const options={quality:'auto',vibration:true,skin:'classic'};
 let best=0,totalCheese=0;
 try{const saved=Number(localStorage.getItem('myshka-total-cheese'));if(Number.isSafeInteger(saved)&&saved>=0)totalCheese=saved;}catch{}
 try{best=Number(localStorage.getItem('myshka-run-best'))||0;options.vibration=localStorage.getItem('myshka-haptics')!=='off';const q=localStorage.getItem('myshka-quality');if(['auto','low','high'].includes(q))options.quality=q;}catch{}
-try{const saved=localStorage.getItem('myshka-skin');if(MOUSE_SKINS.some(s=>s.id===saved&&totalCheese>=s.required))options.skin=saved;}catch{}
+try{const saved=localStorage.getItem('myshka-skin');if(MOUSE_SKINS.some(s=>s.id===saved))options.skin=saved;}catch{}
 let gl,inst,program,meshes={},uniforms={},ready=false,contextLost=false;
 let drawCalls=0,instanceCount=0,group=null,drawAlpha=1,pixelScale=1,lastW=0,lastH=0;
 const view=new Float32Array(16),projection=new Float32Array(16),vp=new Float32Array(16);
@@ -545,7 +548,7 @@ function screen(name){
   lastFrame=performance.now();accumulator=0;
 }
 function resetRun(){
-  Object.assign(run,{magnetTime:0,nextMagnet:1500,shieldAwarded:false,shield:false,shieldGrace:0,logsJumped:0,goalsDone:[false,false,false],toastTime:0,footClock:0,birdClock:1,extraKey:''});
+  Object.assign(run,{magnetTime:0,nextMagnet:1500,shieldAwarded:false,shield:false,shieldGrace:0,logsJumped:0,jumpsMade:0,questCheese:0,goalsDone:GOALS.map(()=>false),toastTime:0,footClock:0,birdClock:1,extraKey:''});
   seed=(Date.now()>>>0)||1;
   Object.assign(run,{time:0,travel:0,lane:0,x:0,y:0,vy:0,lionX:0,lionY:0,lionVy:0,lionZ:-3.8,hit:0,hits:0,hitSide:1,cheese:0,slowTime:0,nextSlow:1000,powerTime:0,powerDuration:0,speedLevel:0,speedBoost:0,speedTarget:0,speedNotice:0,ending:false,queue:0,nextRow:28,row:0,carSerial:Math.floor(rng()*CAR_MODELS.length),dust:0});
   run.objects.length=0;run.lionJumps.length=0;run.runners.length=0;run.particles.length=0;Object.assign(cameraState,{x:0,y:7.3,aimX:0,aimY:.65});
@@ -562,6 +565,7 @@ function home(){resetRun();screen('menu');}
 function changeLane(d){if(mode==='playing'&&!run.ending)run.lane=clamp(run.lane-d,-1,1);}
 function jump(){if(mode==='playing'&&!run.ending){run.queue=.14;if(run.y<=.001)doJump();}}
 function doJump(){
+  run.jumpsMade=(run.jumpsMade||0)+1;checkQuests();
   sound('jump');
   const powered=run.powerTime>0;
   run.vy=JUMP_SPEED*(powered?Math.SQRT2:1);run.queue=0;
@@ -571,8 +575,8 @@ function doJump(){
 function collectCheese(o){
   if(o.used||run.ending)return;
   o.used=true;run.cheese++;totalCheese++;sound('cheese');checkQuests();
-  try{localStorage.setItem('myshka-total-cheese',String(totalCheese));}catch{}
-  const unlocked=MOUSE_SKINS.find(s=>s.required===totalCheese);
+  saveWallet();
+  const unlocked=MOUSE_SKINS.find(s=>s.required===totalCheese&&!ownedSkins.has(s.id));
   if(unlocked)refreshSkinLocks();
   const earned=run.cheese%CHEESE_FOR_POWER===0;
   emit('spark',run.x,run.y+1.1,PLAYER_Z,earned?16:6,COLORS.cheese);
@@ -583,7 +587,7 @@ function collectCheese(o){
     $('announce').textContent='Темп '+(run.speedLevel+1)+'! Швидкість зростає до кінця забігу. Суперстрибки: ще 20 секунд.';
     syncHUD();
   }
-  if(unlocked)$('announce').textContent='Відкрито скін «'+unlocked.name+'»! Вибери його в меню скінів.';
+  if(unlocked)$('announce').textContent='Вистачає сиру на скін «'+unlocked.name+'». Його можна купити в меню.';
   buzz(earned?'power':'coin');
 }
 function runnerSpeed(at=run.travel){
@@ -664,7 +668,7 @@ function hurt(o){
   syncHUD();
 }
 function finishRun(){
-  checkQuests();$('run-missions').textContent='Завдань виконано: '+run.goalsDone.filter(Boolean).length+'/3 · Колод перестрибнуто: '+run.logsJumped;
+  checkQuests();$('run-missions').textContent='Завдань виконано: '+run.goalsDone.filter(Boolean).length+'/'+GOALS.length+' · Нагороди: +'+run.questCheese+' 🧀 · Колод: '+run.logsJumped;
   const distance=Math.floor(run.travel*1.8),record=distance>best;
   best=Math.max(best,distance);try{localStorage.setItem('myshka-run-best',String(best));}catch{}
   $('result-distance').textContent=distance;$('result-cheese').textContent=run.cheese;$('new-record').hidden=!record;screen('over');
@@ -1203,29 +1207,77 @@ bindPress('play',startGame);bindPress('again',startGame);bindPress('restart',sta
 // Adventure extras: all graphics and audio are generated locally.
 const MAGNET_COLOR=[...C('ef829b'),1],SHIELD_COLOR=[...C('6adcf0'),1],MOON_COLOR=[...C('c5dfed'),1],FIREFLY_COLOR=[...C('e8fa96'),1];
 const GOALS=[
-  {title:'Сирний гурман',text:'Збери 50 сирів за забіг',target:50,reward:'scarf',label:'Червоний шарфик',value:()=>run.cheese},
-  {title:'Лісовий мандрівник',text:'Пробіжи 1000 м за забіг',target:1000,reward:'hat',label:'Капелюшок мандрівника',value:()=>Math.floor(run.travel*1.8)},
-  {title:'Майстер стрибків',text:'Перестрибни 10 колод за забіг',target:10,reward:'basket',label:'Золотий кошик',value:()=>run.logsJumped||0}
+  {title:'Сирний гурман',text:'Збери 50 сирів',target:50,value:()=>run.cheese},
+  {title:'Лісовий мандрівник',text:'Пробіжи 1000 м',target:1000,value:()=>Math.floor(run.travel*1.8)},
+  {title:'Майстер стрибків',text:'Перестрибни 10 колод',target:10,value:()=>run.logsJumped||0},
+  {title:'Перший кошик',text:'Збери 25 сирів',target:25,value:()=>run.cheese},
+  {title:'Сирний запас',text:'Збери 100 сирів',target:100,value:()=>run.cheese},
+  {title:'Великий урожай',text:'Збери 200 сирів',target:200,value:()=>run.cheese},
+  {title:'На стежці',text:'Пробіжи 500 м',target:500,value:()=>Math.floor(run.travel*1.8)},
+  {title:'Далека пригода',text:'Пробіжи 2000 м',target:2000,value:()=>Math.floor(run.travel*1.8)},
+  {title:'Лісовий марафон',text:'Пробіжи 3000 м',target:3000,value:()=>Math.floor(run.travel*1.8)},
+  {title:'Пружні лапки',text:'Зроби 15 стрибків',target:15,value:()=>run.jumpsMade||0},
+  {title:'Невтомна Мишка',text:'Зроби 40 стрибків',target:40,value:()=>run.jumpsMade||0},
+  {title:'Через колоди',text:'Перестрибни 5 колод',target:5,value:()=>run.logsJumped||0}
 ];
-let achievements=[false,false,false],accessory='none',soundEnabled=true,audioCtx=null,audioMaster=null,forestGain=null;
-try{const saved=JSON.parse(localStorage.getItem('myshka-extras')||'{}');if(Array.isArray(saved.achievements))achievements=GOALS.map((_,i)=>saved.achievements[i]===true);if(saved.sound===false)soundEnabled=false;if(GOALS.some((g,i)=>g.reward===saved.accessory&&achievements[i]))accessory=saved.accessory;}catch{}
-function saveExtras(){try{localStorage.setItem('myshka-extras',JSON.stringify({achievements,accessory,sound:soundEnabled}));}catch{}}
+const ACCESSORIES=[{id:'scarf',label:'Червоний шарфик',required:300},{id:'hat',label:'Капелюшок мандрівника',required:700},{id:'basket',label:'Золотий кошик',required:1200}];
+let achievements=GOALS.map(()=>false),legacyAccessories=[],accessory='none',soundEnabled=true,audioCtx=null,audioMaster=null,forestGain=null;
+try{const saved=JSON.parse(localStorage.getItem('myshka-extras')||'{}');if(Array.isArray(saved.achievements))achievements=GOALS.map((_,i)=>saved.achievements[i]===true);legacyAccessories=Array.isArray(saved.legacyAccessories)?saved.legacyAccessories.filter(id=>ACCESSORIES.some(a=>a.id===id)):[];if(!saved.questVersion&&Array.isArray(saved.achievements))legacyAccessories=ACCESSORIES.filter((_,i)=>saved.achievements[i]===true).map(a=>a.id);if(saved.sound===false)soundEnabled=false;if(ACCESSORIES.some(a=>a.id===saved.accessory&&(totalCheese>=a.required||legacyAccessories.includes(a.id))))accessory=saved.accessory;}catch{}
+// One persisted wallet snapshot keeps ownership and balance together.
+let ownedSkins=new Set(['classic']),ownedAccessories=new Set();
+try{
+  const wallet=JSON.parse(localStorage.getItem('myshka-wallet')||'null');
+  if(wallet&&wallet.version===1&&Number.isSafeInteger(wallet.balance)&&wallet.balance>=0){
+    totalCheese=wallet.balance;
+    for(const id of wallet.skins||[])if(MOUSE_SKINS.some(s=>s.id===id))ownedSkins.add(id);
+    for(const id of wallet.accessories||[])if(ACCESSORIES.some(a=>a.id===id))ownedAccessories.add(id);
+  }else{
+    // Retain items unlocked under earlier game versions without charging again.
+    for(const skin of MOUSE_SKINS)if(totalCheese>=skin.required)ownedSkins.add(skin.id);
+    for(const item of ACCESSORIES)if(totalCheese>=item.required||legacyAccessories.includes(item.id))ownedAccessories.add(item.id);
+  }
+}catch{}
+if(!ownedSkins.has(options.skin))options.skin='classic';
+try{const old=JSON.parse(localStorage.getItem('myshka-extras')||'{}');if(ownedAccessories.has(old.accessory))accessory=old.accessory;}catch{}
+if(accessory!=='none'&&!ownedAccessories.has(accessory))accessory='none';
+function saveWallet(){try{localStorage.setItem('myshka-wallet',JSON.stringify({version:1,balance:totalCheese,skins:[...ownedSkins],accessories:[...ownedAccessories]}));localStorage.setItem('myshka-total-cheese',String(totalCheese));}catch{}}
+saveWallet();
+function updateAccessoryButton(){
+  const id=$('reward-choice').value,item=ACCESSORIES.find(a=>a.id===id),owned=!item||ownedAccessories.has(id),b=$('accessory-buy');
+  b.disabled=!owned&&totalCheese<item.required;
+  b.textContent=owned?(id===accessory?'Вибрано':'Одягнути'):(b.disabled?'Бракує '+(item.required-totalCheese)+' 🧀':'Купити за '+item.required+' 🧀');
+}
+function buyAccessory(chosenId){
+  const id=typeof chosenId==='string'?chosenId:$('reward-choice').value,item=ACCESSORIES.find(a=>a.id===id);
+  if(id!=='none'&&!item)return;
+  if(item&&!ownedAccessories.has(id)){if(totalCheese<item.required)return;totalCheese-=item.required;ownedAccessories.add(id);saveWallet();}
+  accessory=id;saveExtras();refreshQuests();refreshSkinLocks();dirty=true;
+}
+function saveExtras(){try{localStorage.setItem('myshka-extras',JSON.stringify({questVersion:2,achievements,legacyAccessories,accessory,sound:soundEnabled}));}catch{}}
+function accessoryUnlocked(a){return ownedAccessories.has(a.id);}
 function toast(message){$('reward-toast').textContent=message;$('reward-toast').hidden=false;run.toastTime=3;$('announce').textContent=message;}
 function checkQuests(){
   if(!run.goalsDone)return;
-  GOALS.forEach((g,i)=>{if(!run.goalsDone[i]&&g.value()>=g.target){run.goalsDone[i]=true;const fresh=!achievements[i];achievements[i]=true;saveExtras();sound('bonus');toast('🏅 '+g.title+(fresh?' · Відкрито: '+g.label:' · Завдання виконано!'));}});
-  if(!run.shieldAwarded&&run.goalsDone.every(Boolean)){
+  let earned=0;const names=[];
+  GOALS.forEach((g,i)=>{if(!run.goalsDone[i]&&g.value()>=g.target){run.goalsDone[i]=true;achievements[i]=true;earned+=100;names.push(g.title);}});
+  if(earned){
+    totalCheese+=earned;run.questCheese=(run.questCheese||0)+earned;
+    saveWallet();
+    saveExtras();refreshSkinLocks();sound('bonus');toast('🏅 '+names.join(' · ')+' · +'+earned+' 🧀');
+  }
+  if(!run.shieldAwarded&&run.goalsDone.filter(Boolean).length>=3){
     run.shieldAwarded=true;run.shield=true;
-    toast('🛡 Усі 3 завдання виконано! Щит від одного зіткнення');sound('shield');
+    toast('🛡 Три завдання виконано! Щит від одного зіткнення'+(earned?' · +'+earned+' 🧀':''));sound('shield');
   }
 }
 function refreshQuests(){
-  $('quest-summary').textContent='Досягнення: '+achievements.filter(Boolean).length+'/3. Виконай усі три завдання за один забіг — отримай щит.';
-  $('quest-list').innerHTML=GOALS.map((g,i)=>{const v=Math.min(g.target,g.value());return '<div class="quest-row"><strong>'+(achievements[i]?'✓ ':'◇ ')+g.title+'</strong><br>'+g.text+'<small>Поточний забіг: '+v+'/'+g.target+' · Нагорода: '+g.label+'</small><div class="quest-track"><i style="width:'+Math.min(100,v/g.target*100)+'%"></i></div></div>';}).join('');
-  $('reward-choice').innerHTML='<option value="none">Без аксесуара</option>'+GOALS.map((g,i)=>'<option value="'+g.reward+'" '+(achievements[i]?'':'disabled')+'>'+g.label+(achievements[i]?'':' 🔒')+'</option>').join('');$('reward-choice').value=accessory;
+  $('quest-summary').textContent='Баланс: '+totalCheese+' 🧀 · Виконано в цьому забігу: '+(run.goalsDone||[]).filter(Boolean).length+'/'+GOALS.length;
+  $('quest-list').innerHTML=GOALS.map((g,i)=>{const v=Math.min(g.target,g.value()),done=run.goalsDone?.[i];return '<div class="quest-row"><strong>'+(done?'✓ ':'◇ ')+g.title+'</strong><br>'+g.text+' за один забіг<small>'+v+'/'+g.target+' · '+(done?'Отримано +100 🧀':'Нагорода: +100 🧀')+'</small><div class="quest-track"><i style="width:'+Math.min(100,v/g.target*100)+'%"></i></div></div>';}).join('');
+  $('reward-choice').innerHTML='<option value="none">Без аксесуара</option>'+ACCESSORIES.map(a=>'<option value="'+a.id+'">'+a.label+(accessoryUnlocked(a)?' · Куплено':' · '+a.required+' 🧀')+'</option>').join('');$('reward-choice').value=accessory;updateAccessoryButton();
 }
 function updateExtrasHUD(){
-  const text=(run.magnetTime>0?'🧲 '+Math.ceil(run.magnetTime)+' с · ':'🧲 через '+Math.max(0,Math.ceil((run.nextMagnet||1500)-run.travel*1.8))+' м · ')+(run.shield?'🛡 Щит · ':'')+'🎯 🧀 '+Math.min(50,run.cheese)+'/50 · '+Math.min(1000,Math.floor(run.travel*1.8))+'/1000 м · 🪵 '+Math.min(10,run.logsJumped||0)+'/10';
+  const count=(run.goalsDone||[]).filter(Boolean).length;
+  const text=(run.magnetTime>0?'🧲 '+Math.ceil(run.magnetTime)+' с · ':'🧲 через '+Math.max(0,Math.ceil((run.nextMagnet||1500)-run.travel*1.8))+' м · ')+(run.shield?'🛡 Щит · ':'')+'🎯 '+count+'/'+GOALS.length+' · Нагороди: +'+(run.questCheese||0)+' 🧀';
   if(run.extraKey!==text){$('extra-hud').textContent=text;run.extraKey=text;}$('extra-hud').hidden=false;
 }
 function tickExtras(dt){
@@ -1268,22 +1320,46 @@ function mouseExtras(standing,clock){
 }
 
 bindPress('pause',pauseGame);bindPress('resume',resumeGame);bindPress('pause-menu',home);bindPress('over-menu',home);
-bindPress('quests-open',()=>screen('quests'));bindPress('quests-back',()=>screen('menu'));
-$('reward-choice').onchange=()=>{const id=$('reward-choice').value;if(id==='none'||GOALS.some((g,i)=>g.reward===id&&achievements[i])){accessory=id;saveExtras();dirty=true;}};
+let questsReturn='menu';bindPress('quests-open',()=>{questsReturn='menu';screen('quests');});bindPress('pause-quests',()=>{questsReturn='paused';screen('quests');});bindPress('quests-back',()=>screen(questsReturn));
+$('reward-choice').onchange=updateAccessoryButton;bindPress('accessory-buy',buyAccessory);
 $('sound-enabled').checked=soundEnabled;$('sound-enabled').onchange=()=>{soundEnabled=$('sound-enabled').checked;saveExtras();if(soundEnabled)unlockAudio();updateAudio();};
 bindPress('help-open',()=>screen('help'));bindPress('help-back',()=>screen('menu'));
+function showWardrobe(accessories){
+  $('skin-cards').hidden=accessories;$('accessory-shop').hidden=!accessories;
+  $('wardrobe-skins').setAttribute('aria-pressed',String(!accessories));$('wardrobe-accessories').setAttribute('aria-pressed',String(accessories));
+  refreshSkinLocks();dirty=true;
+}
+function refreshAccessoryCards(){
+  for(const a of ACCESSORIES){
+    const owned=ownedAccessories.has(a.id),equipped=accessory===a.id,button=$('accessory-get-'+a.id);
+    $('accessory-card-'+a.id).classList.toggle('equipped',equipped);
+    $('accessory-price-'+a.id).textContent=owned?'✓ Куплено':a.required+' 🧀';
+    button.disabled=!owned&&totalCheese<a.required;
+    button.textContent=equipped?'Вибрано':owned?'Одягнути':button.disabled?'Бракує '+(a.required-totalCheese)+' 🧀':'Купити';
+    button.setAttribute('aria-label',a.label+'. '+button.textContent+(owned?'':' за '+a.required+' сиру'));
+  }
+  $('accessory-equipped').textContent=accessory==='none'?'Обери аксесуар для своєї Мишки':'Одягнено: '+ACCESSORIES.find(a=>a.id===accessory).label;
+  $('accessory-remove').hidden=accessory==='none';
+}
+bindPress('wardrobe-skins',()=>showWardrobe(false));bindPress('wardrobe-accessories',()=>showWardrobe(true));
+for(const a of ACCESSORIES)bindPress('accessory-get-'+a.id,()=>buyAccessory(a.id));
+bindPress('accessory-remove',()=>buyAccessory('none'));
 function refreshSkinLocks(){
-  $('skin-total').textContent='Усього зібрано: '+totalCheese+' 🧀';
+  refreshAccessoryCards();
+  $('skin-total').textContent='Баланс: '+totalCheese+' 🧀';
   for(const skin of MOUSE_SKINS){
-    const locked=totalCheese<skin.required,button=$('skin-'+skin.id);
+    const owned=ownedSkins.has(skin.id),locked=!owned&&totalCheese<skin.required,button=$('skin-'+skin.id);
     button.disabled=locked;button.setAttribute('aria-disabled',String(locked));
-    $('skin-cost-'+skin.id).textContent=locked?'🔒 '+skin.required+' 🧀':skin.required===0?'Доступна':'✓ Відкрито';
-    button.setAttribute('aria-label',skin.name+(locked?'. Збери '+skin.required+' сирів. Залишилось '+(skin.required-totalCheese):'. Доступна'));
+    $('skin-cost-'+skin.id).textContent=owned?(skin.required===0?'Безкоштовно':'✓ Куплено'):'Купити · '+skin.required+' 🧀';
+    button.setAttribute('aria-label',skin.name+(owned?'. Вибрати':locked?'. Бракує '+(skin.required-totalCheese)+' сиру':'. Купити за '+skin.required+' сиру'));
   }
 }
 function selectSkin(id,persist=true){
   const skin=MOUSE_SKINS.find(s=>s.id===id)||MOUSE_SKINS[0],changed=options.skin!==skin.id;
-  if(totalCheese<skin.required)return;
+  if(!ownedSkins.has(skin.id)){
+    if(!persist||totalCheese<skin.required)return;
+    totalCheese-=skin.required;ownedSkins.add(skin.id);saveWallet();
+  }
   refreshSkinLocks();
   options.skin=skin.id;MOUSE_COLOR_KEYS.forEach((key,i)=>{ANIMAL[key]=skin.colors[i];});
   // Only upload new colors when the selection changes; geometry and collision sizes stay fixed.
@@ -1385,4 +1461,3 @@ bootGame();
 </script>
 </body>
 </html>
-
