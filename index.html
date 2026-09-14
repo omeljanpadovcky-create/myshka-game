@@ -139,6 +139,13 @@ h2{font-size:29px;letter-spacing:-1px;line-height:1.1;margin:0 0 16px}
 #touch-controls button.pressed,#touch-controls #jump.pressed{transform:translateY(3px);filter:brightness(.94);box-shadow:0 2px 0 #352519,inset 0 0 0 2px #c19a59}
 #extra-hud,#mission-hud,#road-warning,#croc-hint{background:linear-gradient(115deg,#193f32f2,#294f3fea);border:1px solid #b3ad7180;box-shadow:0 4px 10px #182e2433,inset 0 1px 0 #dfddb322;color:#f5e4b4}
 .pause-button{background:linear-gradient(145deg,#3e6250,#183d32);border:2px solid #af98656b;box-shadow:inset 0 1px 3px #e5dab333,0 4px 8px #182e2440}
+
+/* Full cartoon pass */
+:root{--toon-shadow:0 5px 0 rgba(64,45,25,.28),0 8px 18px rgba(0,0,0,.18)}
+#hud .panel,.hud-pill,#mission-panel,#event-banner,#pause,
+button,.btn{filter:saturate(.92) brightness(.96);box-shadow:var(--toon-shadow)!important}
+#game{image-rendering:auto}
+
 </style>
 </head>
 <body>
@@ -172,7 +179,7 @@ h2{font-size:29px;letter-spacing:-1px;line-height:1.1;margin:0 0 16px}
 <section id="menu" class="panel" aria-label="Головне меню">
 <p class="kicker">ДВІ МІСІЇ · v26</p><h1>Кошики<br>Мишки</h1><p class="tagline">Лев уже на хвості! Збирай сир<br>і знаходь свою стежку.</p>
 <div class="badge">Твій рекорд <span id="menu-best">0 м</span></div>
-<div class="actions"><button id="play" class="primary">Побігли! →</button><button id="leaders-open" class="secondary">🏆 Таблиця лідерів</button><button id="skins-open" class="secondary">Скін: <span id="skin-current">Лісова</span> 🐭</button><button id="help-open" class="secondary">Як грати</button><button id="settings-open" class="secondary">Налаштування</button><button id="exchange-open" class="secondary">🔑 Обмін</button><button id="quests-open" class="secondary">🏅 Завдання та нагороди</button></div><div class="social-links" aria-label="Соціальні мережі автора"><span>Соцмережі автора</span><div><button id="social-instagram" type="button">Instagram<br><small>+100 🧀</small></button><button id="social-telegram" type="button">Telegram<br><small>+100 🧀</small></button><button id="social-tiktok" type="button">TikTok<br><small>+100 🧀</small></button></div><small id="social-status" role="status">+100 🧀 за перший перехід у кожну соцмережу</small></div><div class="menu-bottom">🔑 Два ключики за забіг · кожен відкриває кейс з однією річчю<br>Кожні 100 🧀 = вищий темп · бонуси шукай на стежці</div>
+<div class="actions"><button id="play" class="primary">Побігли! →</button><button id="leaders-open" class="secondary">🏆 Таблиця лідерів</button><button id="skins-open" class="secondary">Скін: <span id="skin-current">Лісова</span> 🐭</button><button id="help-open" class="secondary">Як грати</button><button id="settings-open" class="secondary">Налаштування</button><button id="exchange-open" class="secondary">🎁 Скрині та ключі</button><button id="quests-open" class="secondary">🏅 Завдання та нагороди</button></div><div class="social-links" aria-label="Соціальні мережі автора"><span>Соцмережі автора</span><div><button id="social-instagram" type="button">Instagram<br><small>+100 🧀</small></button><button id="social-telegram" type="button">Telegram<br><small>+100 🧀</small></button><button id="social-tiktok" type="button">TikTok<br><small>+100 🧀</small></button></div><small id="social-status" role="status">+100 🧀 за перший перехід у кожну соцмережу</small></div><div class="menu-bottom">🔑 Збирай ключики на маршруті · відкривай ними скрині з образами<br>Кожні 100 🧀 = вищий темп · бонуси шукай на стежці</div>
 </section>
 <section id="skins" class="panel skin-panel" hidden aria-label="Скіни Мишки"><h2>Твоя Мишка</h2><p class="skin-intro">Скіни та аксесуари за сир. Покупка назавжди — повторний вибір безкоштовний.</p><div class="wardrobe-tabs" role="group" aria-label="Категорія магазину"><button id="wardrobe-skins" aria-pressed="true" aria-controls="skin-cards">🐭 Скіни</button><button id="wardrobe-accessories" aria-pressed="false" aria-controls="accessory-shop">🧣 Аксесуари</button></div><p id="skin-total" class="skin-intro">Усього зібрано: 0 🧀</p><div id="skin-preview" role="img" aria-label="3D-перегляд вибраного скіна"></div><p id="skin-name">Лісова</p><div id="skin-cards" class="skin-grid" role="group" aria-label="Вибери скін">
 <button id="skin-classic" class="skin-choice" aria-pressed="true" style="--fur:#9e9992;--ear:#d8a29f"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Лісова</span><small id="skin-cost-classic" class="skin-cost"></small></button>
@@ -182,9 +189,9 @@ h2{font-size:29px;letter-spacing:-1px;line-height:1.1;margin:0 0 16px}
 <button id="skin-lavender" class="skin-choice" aria-pressed="false" style="--fur:#b7a0cf;--ear:#e4b3d3"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Лавандова</span><small id="skin-cost-lavender" class="skin-cost"></small></button>
 <button id="skin-golden" class="skin-choice" aria-pressed="false" style="--fur:#e4c56c;--ear:#dbab84"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Золота</span><small id="skin-cost-golden" class="skin-cost"></small></button><button id="skin-emerald" class="skin-choice" aria-pressed="false" style="--fur:#39b99a;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Смарагдова</span><small id="skin-cost-emerald" class="skin-cost"></small></button><button id="skin-sapphire" class="skin-choice" aria-pressed="false" style="--fur:#527ee4;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Сапфірова</span><small id="skin-cost-sapphire" class="skin-cost"></small></button><button id="skin-pearl" class="skin-choice" aria-pressed="false" style="--fur:#edc3e8;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Перлинна</span><small id="skin-cost-pearl" class="skin-cost"></small></button><button id="skin-dots" class="skin-choice" aria-pressed="false" style="--fur:#efe4cf;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>У крапочку</span><small id="skin-cost-dots" class="skin-cost"></small></button><button id="skin-stripes" class="skin-choice" aria-pressed="false" style="--fur:#f4eee1;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Зебра</span><small id="skin-cost-stripes" class="skin-cost"></small></button><button id="skin-spots" class="skin-choice" aria-pressed="false" style="--fur:#d9ae62;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Леопардова</span><small id="skin-cost-spots" class="skin-cost"></small></button><button id="skin-waves" class="skin-choice" aria-pressed="false" style="--fur:#69cbd2;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Морська</span><small id="skin-cost-waves" class="skin-cost"></small></button><button id="skin-checks" class="skin-choice" aria-pressed="false" style="--fur:#e9e3d3;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Шахова</span><small id="skin-cost-checks" class="skin-cost"></small></button><button id="skin-stars" class="skin-choice" aria-pressed="false" style="--fur:#41496f;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Зоряна</span><small id="skin-cost-stars" class="skin-cost"></small></button><button id="skin-hearts" class="skin-choice" aria-pressed="false" style="--fur:#f5ced9;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Серденька</span><small id="skin-cost-hearts" class="skin-cost"></small></button><button id="skin-diamonds" class="skin-choice" aria-pressed="false" style="--fur:#b99ee2;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Арлекін</span><small id="skin-cost-diamonds" class="skin-cost"></small></button><button id="skin-bands" class="skin-choice" aria-pressed="false" style="--fur:#e8cc60;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Бджілка</span><small id="skin-cost-bands" class="skin-cost"></small></button><button id="skin-snowflakes" class="skin-choice" aria-pressed="false" style="--fur:#c5e9ed;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Крижана</span><small id="skin-cost-snowflakes" class="skin-cost"></small></button><button id="skin-confetti" class="skin-choice" aria-pressed="false" style="--fur:#ecd4ad;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Конфеті</span><small id="skin-cost-confetti" class="skin-cost"></small></button><button id="skin-leaves" class="skin-choice" aria-pressed="false" style="--fur:#a9cb80;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Листочок</span><small id="skin-cost-leaves" class="skin-cost"></small></button><button id="skin-marble" class="skin-choice" aria-pressed="false" style="--fur:#e8e5e0;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Мармурова</span><small id="skin-cost-marble" class="skin-cost"></small></button><button id="skin-zigzag" class="skin-choice" aria-pressed="false" style="--fur:#7067ba;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Блискавка</span><small id="skin-cost-zigzag" class="skin-cost"></small></button><button id="skin-freckles" class="skin-choice" aria-pressed="false" style="--fur:#e993a0;--ear:#e7abc2"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Полунична</span><small id="skin-cost-freckles" class="skin-cost"></small></button>
 <button id="skin-tiger" class="skin-choice" aria-pressed="false" style="--fur:#db973f;--ear:#e7b3bf"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Тигрова</span><small id="skin-cost-tiger">🎁 Лише з кейса</small></button><button id="skin-cosmic" class="skin-choice" aria-pressed="false" style="--fur:#37305d;--ear:#e7b3bf"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Космічна</span><small id="skin-cost-cosmic">🎁 Лише з кейса</small></button><button id="skin-aurora" class="skin-choice" aria-pressed="false" style="--fur:#516aad;--ear:#e7b3bf"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Північне сяйво</span><small id="skin-cost-aurora">🎁 Лише з кейса</small></button><button id="skin-honey" class="skin-choice" aria-pressed="false" style="--fur:#efc567;--ear:#e7b3bf"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Медова</span><small id="skin-cost-honey">🎁 Лише з кейса</small></button><button id="skin-dragon" class="skin-choice" aria-pressed="false" style="--fur:#6cba91;--ear:#e7b3bf"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Драконяча</span><small id="skin-cost-dragon">🎁 Лише з кейса</small></button><button id="skin-rainbow" class="skin-choice" aria-pressed="false" style="--fur:#f2c7dd;--ear:#e7b3bf"><svg aria-hidden="true"><use href="#mouse-skin-icon"/></svg><span>Веселкова</span><small id="skin-cost-rainbow">🎁 Лише з кейса</small></button></div><div id="accessory-shop" hidden><p id="accessory-equipped"></p><div class="accessory-grid" role="group" aria-label="Аксесуари Мишки"><article id="accessory-card-scarf" class="accessory-card"><span class="accessory-art" aria-hidden="true">🧣</span><strong>Шарфик</strong><small id="accessory-price-scarf"></small><button id="accessory-get-scarf">Купити</button></article><article id="accessory-card-hat" class="accessory-card"><span class="accessory-art" aria-hidden="true">👒</span><strong>Капелюшок</strong><small id="accessory-price-hat"></small><button id="accessory-get-hat">Купити</button></article><article id="accessory-card-basket" class="accessory-card"><span class="accessory-art" aria-hidden="true">🧺</span><strong>Золотий кошик</strong><small id="accessory-price-basket"></small><button id="accessory-get-basket">Купити</button></article><article id="accessory-card-bow" class="accessory-card"><span class="accessory-art" aria-hidden="true">🎀</span><strong>Бірюзовий бантик</strong><small id="accessory-price-bow"></small><button id="accessory-get-bow">Купити</button></article><article id="accessory-card-glasses" class="accessory-card"><span class="accessory-art" aria-hidden="true">👓</span><strong>Круглі окуляри</strong><small id="accessory-price-glasses"></small><button id="accessory-get-glasses">Купити</button></article><article id="accessory-card-beret" class="accessory-card"><span class="accessory-art" aria-hidden="true">🟣</span><strong>Фіолетовий берет</strong><small id="accessory-price-beret"></small><button id="accessory-get-beret">Купити</button></article><article id="accessory-card-backpack" class="accessory-card"><span class="accessory-art" aria-hidden="true">🎒</span><strong>Рюкзачок</strong><small id="accessory-price-backpack"></small><button id="accessory-get-backpack">Купити</button></article><article id="accessory-card-crown" class="accessory-card"><span class="accessory-art" aria-hidden="true">👑</span><strong>Корона</strong><small id="accessory-price-crown"></small><button id="accessory-get-crown">Купити</button></article><article id="accessory-card-wings" class="accessory-card"><span class="accessory-art" aria-hidden="true">🦋</span><strong>Крила метелика</strong><small id="accessory-price-wings"></small><button id="accessory-get-wings">Купити</button></article><article id="accessory-card-wreath" class="accessory-card"><span class="accessory-art" aria-hidden="true">🌼</span><strong>Квітковий вінок</strong><small id="accessory-price-wreath">🎁 Лише з кейса</small><button id="accessory-get-wreath" disabled>Лише з кейса</button></article><article id="accessory-card-headphones" class="accessory-card"><span class="accessory-art" aria-hidden="true">🎧</span><strong>Навушники</strong><small id="accessory-price-headphones">🎁 Лише з кейса</small><button id="accessory-get-headphones" disabled>Лише з кейса</button></article><article id="accessory-card-aviator" class="accessory-card"><span class="accessory-art" aria-hidden="true">🥽</span><strong>Окуляри пілота</strong><small id="accessory-price-aviator">🎁 Лише з кейса</small><button id="accessory-get-aviator" disabled>Лише з кейса</button></article><article id="accessory-card-beanie" class="accessory-card"><span class="accessory-art" aria-hidden="true">🧶</span><strong>Шапка з помпоном</strong><small id="accessory-price-beanie">🎁 Лише з кейса</small><button id="accessory-get-beanie" disabled>Лише з кейса</button></article><article id="accessory-card-rainhat" class="accessory-card"><span class="accessory-art" aria-hidden="true">🌧️</span><strong>Дощова панамка</strong><small id="accessory-price-rainhat">🎁 Лише з кейса</small><button id="accessory-get-rainhat" disabled>Лише з кейса</button></article><article id="accessory-card-wizard" class="accessory-card"><span class="accessory-art" aria-hidden="true">🧙</span><strong>Зоряний ковпак</strong><small id="accessory-price-wizard">🎁 Лише з кейса</small><button id="accessory-get-wizard" disabled>Лише з кейса</button></article><article id="accessory-card-sailor" class="accessory-card"><span class="accessory-art" aria-hidden="true">⚓</span><strong>Морський кашкет</strong><small id="accessory-price-sailor">🎁 Лише з кейса</small><button id="accessory-get-sailor" disabled>Лише з кейса</button></article><article id="accessory-card-leafcape" class="accessory-card"><span class="accessory-art" aria-hidden="true">🍃</span><strong>Плащ із листя</strong><small id="accessory-price-leafcape">🎁 Лише з кейса</small><button id="accessory-get-leafcape" disabled>Лише з кейса</button></article><article id="accessory-card-medal" class="accessory-card"><span class="accessory-art" aria-hidden="true">🏅</span><strong>Медаль мандрівника</strong><small id="accessory-price-medal">🎁 Лише з кейса</small><button id="accessory-get-medal" disabled>Лише з кейса</button></article><article id="accessory-card-bowtie" class="accessory-card"><span class="accessory-art" aria-hidden="true">🎀</span><strong>Метелик на шию</strong><small id="accessory-price-bowtie">🎁 Лише з кейса</small><button id="accessory-get-bowtie" disabled>Лише з кейса</button></article><article id="accessory-card-lantern" class="accessory-card"><span class="accessory-art" aria-hidden="true">🏮</span><strong>Ліхтарик</strong><small id="accessory-price-lantern">🎁 Лише з кейса</small><button id="accessory-get-lantern" disabled>Лише з кейса</button></article><article id="accessory-card-satchel" class="accessory-card"><span class="accessory-art" aria-hidden="true">👜</span><strong>Сумка листоноші</strong><small id="accessory-price-satchel">🎁 Лише з кейса</small><button id="accessory-get-satchel" disabled>Лише з кейса</button></article><article id="accessory-card-acorn" class="accessory-card"><span class="accessory-art" aria-hidden="true">🌰</span><strong>Жолудевий капелюшок</strong><small id="accessory-price-acorn">🎁 Лише з кейса</small><button id="accessory-get-acorn" disabled>Лише з кейса</button></article><article id="accessory-card-rose" class="accessory-card"><span class="accessory-art" aria-hidden="true">🌹</span><strong>Квіткова брошка</strong><small id="accessory-price-rose">🎁 Лише з кейса</small><button id="accessory-get-rose" disabled>Лише з кейса</button></article><article id="accessory-card-antennae" class="accessory-card"><span class="accessory-art" aria-hidden="true">⭐</span><strong>Зоряні вусики</strong><small id="accessory-price-antennae">🎁 Лише з кейса</small><button id="accessory-get-antennae" disabled>Лише з кейса</button></article><article id="accessory-card-ladybug" class="accessory-card"><span class="accessory-art" aria-hidden="true">🐞</span><strong>Плащик сонечка</strong><small id="accessory-price-ladybug">🎁 Лише з кейса</small><button id="accessory-get-ladybug" disabled>Лише з кейса</button></article><article id="accessory-card-cloud" class="accessory-card"><span class="accessory-art" aria-hidden="true">☁️</span><strong>Хмаринка на спині</strong><small id="accessory-price-cloud">🎁 Лише з кейса</small><button id="accessory-get-cloud" disabled>Лише з кейса</button></article><article id="accessory-card-sun" class="accessory-card"><span class="accessory-art" aria-hidden="true">🌞</span><strong>Сонячний обруч</strong><small id="accessory-price-sun">🎁 Лише з кейса</small><button id="accessory-get-sun" disabled>Лише з кейса</button></article></div><button id="accessory-remove" class="secondary">Зняти аксесуар</button></div><button id="skins-back" class="primary" style="width:100%">Готово →</button></section>
-<section id="exchange" class="panel card" hidden><p class="kicker">Твій запас</p><h2>Обмін</h2><p id="exchange-wallet"></p><div class="exchange-offer"><span>15 000 🧀</span><span>→</span><span>1 🔑</span></div><p class="setting-note">Обмінюй зібраний у грі сир на ключики. Один ключик відкриває кейс з однією новою річчю назавжди.</p><button id="exchange-buy" class="primary">Обміняти 15 000 🧀</button><button id="exchange-use" class="secondary">Відкрити кейс · 1 🔑</button><p id="exchange-result" role="status" aria-live="polite"></p><button id="exchange-back" class="secondary">У меню</button></section>
+<section id="exchange" class="panel card" hidden><p class="kicker">Колекція Мишки</p><h2>🎁 Скрині та ключі</h2><p id="exchange-wallet"></p><div class="exchange-offer"><span>15 000 🧀</span><span>→</span><span>3 🔑</span></div><p class="setting-note">Збирай ключики під час забігу так само, як сир. Кожен ключик зберігається у твоєму запасі. За 1 🔑 можна відкрити одну скриню з випадковим новим скіном або аксесуаром без повторів.</p><button id="exchange-buy" class="primary">Обміняти 15 000 🧀 → 3 🔑</button><button id="exchange-use" class="secondary">🎁 Відкрити скриню · 1 🔑</button><p id="exchange-result" role="status" aria-live="polite"></p><button id="exchange-back" class="secondary">У меню</button></section>
 <section id="leaders" class="panel card" hidden><p class="kicker">Найкращі забіги</p><h2>Таблиця лідерів</h2><p class="skin-intro"><span id="leader-scope">Особистий рекорд</span></p><label for="leader-name" class="skin-intro">Ім’я для наступного забігу</label><input id="leader-name" maxlength="20" autocomplete="off" placeholder="Мишка"><p id="leader-note" class="setting-note">Після першого завершеного забігу твій рекорд додається автоматично. Один найкращий результат на гравця: спочатку метри, потім сир. Нік і результат будуть видимі іншим у спільній таблиці після її підключення.</p><p id="leader-network" role="status"></p><p id="leader-me"></p><table id="leader-table"><thead><tr><th scope="col">№</th><th scope="col">Гравець</th><th scope="col">Метри</th><th scope="col">Сир</th></tr></thead><tbody id="leader-rows"></tbody></table><p id="leader-empty" class="tagline">Заверши перший забіг — і він з’явиться тут!</p><button id="leaders-back" class="primary" style="width:100%">Назад</button></section>
-<section id="help" class="panel card" hidden><p class="kicker">Довідник Мишки</p><h2>Як грати</h2><p class="help-intro">Усі правила в одному місці. Натисни на розділ, щоб розгорнути пояснення.</p><div class="help-guide"><details><summary>💭 Бігуни, плавці та думки</summary><p>Бігуни рухаються сушею й зупиняються перед автомобільною дорогою. У крокодилячій річці вони плавають: плавець тікає, а окремий крокодил пливе за ним. Це декорація, яка не змінює крокодилів переправи. Кожен десятий бігун показує одну з 18 випадкових думок, коли персонаж наближається на 20 м. Хмарка зникає через 3 секунди або коли відстань збільшується.</p></details><details open><summary>❤️ Сердечко кожні 10 000 м</summary><p>Червоне сердечко лежить на маршруті після кожної позначки 10 000 м: 10 000, 20 000, 30 000 і далі. Воно заздалегідь розміщується на найближчому безпечному місці. Треба торкнутися його персонажем — магніт його не притягує. Сердечко відновлює одне втрачене життя, максимум 3 для Мишки або 9 для Лева під час зміни ролей. Якщо життя повні, додатковий запас не накопичується.</p></details><details><summary>🏁 Як працює твій рекорд</summary><p>Після першого завершеного забігу записується твій найкращий результат. Більша відстань завжди важливіша; якщо метри однакові, перемагає більше сиру. Новий кращий забіг замінює твій попередній рекорд. Спільна таблиця потребує підключення сервера; без нього видно лише власний рекорд. Після підключення результати надсилаються автоматично, а збережений результат повторно надсилається при відновленні зв’язку. Гравець розпізнається за цим браузером, тому інший пристрій або очищення даних створюють новий профіль.</p></details><details><summary>🗺 Предмети на карті</summary><p>На початку забігу гра визначає випадкове розташування предметів. Далекі частини нескінченного маршруту готуються поза видимістю. Предмети вже лежать на своїх місцях, коли ти наближаєшся; зміна смуги не пересуває їх. Один щит і два ключики за забіг. «+» повторюється: один між 7000–10 000 м, далі по одному на ділянках 10 000–15 000 м, 15 000–20 000 м і так далі. Магніти, суперстрибки та сповільнення трапляються повторно.</p></details><details><summary>✚ Зміна ролей</summary><p>Бонус «+» заздалегідь розміщується випадково: перший між 7000–10 000 м, наступний між 10 000–15 000 м, потім 15 000–20 000 м і так далі. Предмет може бути трохи зміщений до найближчого безпечного місця. Повторне підбирання оновлює 21 секунду і 9 життів Лева. Підхопи його: на 21 секунду керуєш Левом із 9 життями, а позаду біжить велетенська Мишка. Лев біжить прямо по центральній смузі. Можна стрибати; зміна смуг на ці 21 секунду вимкнена. На крокодилячій переправі зміна смуг у повітрі доступна, щоб пройти її. Потім повертається Мишка з кількістю життів, яку мала до бонусу. Пауза зупиняє таймер. Вода та затримка на крокодилі все одно завершують забіг.</p></details><details open><summary>🐭 Мета гри</summary><p>Мишка біжить автоматично, а Лев наздоганяє. Пробіжи якомога далі, збирай сир і відкривай образи. На стежці три смуги. Результат забігу — пройдена відстань.</p></details><details open><summary>🎮 Керування</summary><p>На комп’ютері: ← і → — змінити смугу; ↑ або пробіл — стрибнути; Esc — пауза або продовження. На телефоні: свайп убік — змінити смугу, свайп угору або короткий дотик до гри — стрибок. Унизу також є кнопки стрілок і стрибка.</p></details><details><summary>♥ Життя та перешкоди</summary><p>На початку маєш три життя. Зіткнення забирає одне, і Лев наближається. Третє зіткнення завершує забіг. Колоди, каміння й невисокі перешкоди перестрибуй або оминай. Дерева оминай зміною смуги. На автомобільних дорогах стеж за транспортом; високі машини надійніше обходити.</p></details><details><summary>🧀 Сир і баланс</summary><p>Підхоплюй сир Мишкою. Кожен шматочок додається і до лічильника поточного забігу, і до загального балансу. Баланс витрачається в магазині та обміні. Сир за місії й соцмережі надходить лише на баланс: він не прискорює біг і не наближає наступний суперстрибок.</p></details><details><summary>⚡ Темп і суперстрибок</summary><p>Кожні 100 сирів, зібраних на стежці, підвищують темп до кінця забігу; розгін поступовий. Суперстрибки ↑ заздалегідь розкладені у випадкових місцях маршруту та не залежать від зібраного сиру. Підхопи його: протягом 20 секунд стрибки стають удвічі вищими. Новий підібраний суперстрибок додає ще 20 секунд. Блок «До бонусів» прихований, але механіка працює.</p></details><details><summary>🧲 Магніт</summary><p>Магніти з’являються через випадкові проміжки 1500–5000 метрів. Після підбирання магніт діє 12 секунд: сусідній сир плавно летить до Мишки. Магніт притягує лише сир, а інші бонуси й ключики треба підхоплювати самому. Якщо пропустити предмет, ефект не ввімкнеться.</p></details><details><summary>🛡 Щит</summary><p>Один щит з’являється за забіг у випадковий момент між 1500 і 5000 м, незалежно від місій. Підхопи його: він захистить від одного зіткнення й зникне. Щит не рятує від потрапляння у воду або затримки на крокодилі.</p></details><details><summary>⏱ Сповільнення часу</summary><p>Предмети сповільнення розкидані вздовж маршруту через випадкові проміжки 800–1400 м. Після підбирання ігровий світ сповільнюється вдвічі на 5 секунд. Мишка, Лев і транспорт сповільнюються разом. Відлік двох секунд на крокодилі від цього не подовжується.</p></details><details><summary>🎯 Дві місії за забіг</summary><p>На кожен новий забіг обираються дві випадкові місії різних типів: збирати сир, долати відстань, стрибати або перестрибувати колоди. Точні умови й прогрес видно на темній плашці та у вкладці «Завдання та нагороди». Кожна виконана місія автоматично дає 100 сиру — максимум 200 за забіг. Невиконаний прогрес не переноситься, а наступний забіг отримує нову пару.</p></details><details><summary>🌲 Локації</summary><p>На маршруті чергуються лісова стежка, дерев’яні місточки над річкою, тунелі з гілок і квіткові галявини. Риби у воді та бігуни збоку — декорації. Звичайний місток має прохід, а крокодиляча переправа потребує стрибків.</p></details><details><summary>🐊 Крокодиляча переправа</summary><p>Додаткова переправа трапляється кожні 3000 м. Біля входу є коротка чиста ділянка та підказка. Автоматичної зупинки перед водою немає: стрибай із берега! Допомога доводить стрибок тільки до першого крокодила, навіть із суперстрибком. Далі в кожному ряду один крокодил, смуги чергуються: стрибай і змінюй смугу в повітрі самостійно. Між крокодилами — лише стрибки. Приземлився у воду — забіг завершено. На одній спині можна залишатися менше 2 секунд; відлік показаний на екрані. Після останнього крокодила стрибай на піщаний берег, який переходить у стежку.</p></details><details><summary>🔑 Ключики на маршруті</summary><p>За забіг можуть з’явитися два ключики: перший після випадкової позначки 4000–7000 м, другий ще через 2500–5000 м. Предмет розміщується попереду на вільному місці, тому його фактичне підбирання може бути трохи пізніше. Підхоплений ключик на маршруті відразу відкриває кейс з однією ще не відкритою річчю. Пропущений ключик нагороди не дає.</p></details><details><summary>🎁 Колекція та кейси</summary><p>Кейс дає один випадковий скін або аксесуар зі своєї колекції, якого ти ще не маєш. Річ залишається відкритою назавжди на цьому пристрої. Повторів немає. Отриманий образ знайдеш у гардеробі — його треба вибрати. Коли вся колекція кейсів відкрита, нових речей із них уже немає.</p></details><details><summary>👗 Скіни й аксесуари</summary><p>Відкрий кнопку «Скін» у меню. У гардеробі є вкладки скінів та аксесуарів. Речі з ціною купуються за сир із балансу: сума списується один раз, повторне одягання безкоштовне. Позначка «Лише з кейса» означає, що річ не продається за сир. Можна вибрати один скін та один аксесуар; аксесуар можна зняти. Образи змінюють зовнішність, а не швидкість чи силу бонусів.</p></details><details><summary>🔄 Обмін</summary><p>У меню «Обмін» 15 000 зібраного у грі сиру обмінюються на один ключик. Такі ключики зберігаються окремо: використай кнопку «Відкрити кейс» зараз або залиш на потім. Відкриття витрачає один ключик і дає одну нову річ. Обмін недоступний, якщо бракує сиру або ключиків уже вистачає на решту колекції.</p></details><details><summary>📱 Соцмережі та нагороди</summary><p>Кнопки Instagram, Telegram і TikTok відкривають сторінки автора в новій вкладці. За перший перехід у кожну мережу отримуєш 100 сиру на баланс, разом — до 300. Нагорода одноразова на цьому пристрої й у цьому браузері. Гра нараховує її за перехід, а не перевіряє підписку.</p></details><details><summary>💾 Збереження прогресу</summary><p>Баланс, відкриті речі, ключики обміну та нагороди соцмереж зберігаються в цьому браузері. Поточний забіг після перезавантаження не відновлюється. Рекорд надсилається до спільної таблиці тільки після підключення сервера. Повний доступ до колекції та прогресу на іншому пристрої не переноситься автоматично.</p></details><details><summary>⚙ Пауза й налаштування</summary><p>Кнопка паузи або Esc зупиняє забіг і таймери, включно з відліком на крокодилі. Повернення в меню починає новий забіг із новими місіями. У налаштуваннях можна змінити якість графіки, звук і вібрацію. На слабкому пристрої зменш якість; вібрація працює лише там, де її підтримує браузер.</p></details></div><button id="help-back" class="primary" style="width:100%;margin-top:18px">Зрозуміло →</button></section>
+<section id="help" class="panel card" hidden><p class="kicker">Довідник Мишки</p><h2>Як грати</h2><p class="help-intro">Усі правила в одному місці. Натисни на розділ, щоб розгорнути пояснення.</p><div class="help-guide"><details><summary>💭 Бігуни, плавці та думки</summary><p>Бігуни рухаються сушею й зупиняються перед автомобільною дорогою. У крокодилячій річці вони плавають: плавець тікає, а окремий крокодил пливе за ним. Це декорація, яка не змінює крокодилів переправи. Кожен десятий бігун показує одну з 18 випадкових думок, коли персонаж наближається на 20 м. Хмарка зникає через 3 секунди або коли відстань збільшується.</p></details><details open><summary>❤️ Сердечко кожні 10 000 м</summary><p>Червоне сердечко лежить на маршруті після кожної позначки 10 000 м: 10 000, 20 000, 30 000 і далі. Воно заздалегідь розміщується на найближчому безпечному місці. Треба торкнутися його персонажем — магніт його не притягує. Сердечко відновлює одне втрачене життя, максимум 3 для Мишки або 9 для Лева під час зміни ролей. Якщо життя повні, додатковий запас не накопичується.</p></details><details><summary>🏁 Як працює твій рекорд</summary><p>Після першого завершеного забігу записується твій найкращий результат. Більша відстань завжди важливіша; якщо метри однакові, перемагає більше сиру. Новий кращий забіг замінює твій попередній рекорд. Спільна таблиця потребує підключення сервера; без нього видно лише власний рекорд. Після підключення результати надсилаються автоматично, а збережений результат повторно надсилається при відновленні зв’язку. Гравець розпізнається за цим браузером, тому інший пристрій або очищення даних створюють новий профіль.</p></details><details><summary>🗺 Предмети на карті</summary><p>На початку забігу гра визначає випадкове розташування предметів. Далекі частини нескінченного маршруту готуються поза видимістю. Предмети вже лежать на своїх місцях, коли ти наближаєшся; зміна смуги не пересуває їх. Один щит і два ключики за забіг. «+» повторюється: один між 7000–10 000 м, далі по одному на ділянках 10 000–15 000 м, 15 000–20 000 м і так далі. Магніти, суперстрибки та сповільнення трапляються повторно.</p></details><details><summary>✚ Зміна ролей</summary><p>Бонус «+» заздалегідь розміщується випадково: перший між 7000–10 000 м, наступний між 10 000–15 000 м, потім 15 000–20 000 м і так далі. Предмет може бути трохи зміщений до найближчого безпечного місця. Повторне підбирання оновлює 21 секунду і 9 життів Лева. Підхопи його: на 21 секунду керуєш Левом із 9 життями, а позаду біжить велетенська Мишка. Лев біжить прямо по центральній смузі. Можна стрибати; зміна смуг на ці 21 секунду вимкнена. На крокодилячій переправі зміна смуг у повітрі доступна, щоб пройти її. Потім повертається Мишка з кількістю життів, яку мала до бонусу. Пауза зупиняє таймер. Вода та затримка на крокодилі все одно завершують забіг.</p></details><details open><summary>🐭 Мета гри</summary><p>Мишка біжить автоматично, а Лев наздоганяє. Пробіжи якомога далі, збирай сир і відкривай образи. На стежці три смуги. Результат забігу — пройдена відстань.</p></details><details open><summary>🎮 Керування</summary><p>На комп’ютері: ← і → — змінити смугу; ↑ або пробіл — стрибнути; Esc — пауза або продовження. На телефоні: свайп убік — змінити смугу, свайп угору або короткий дотик до гри — стрибок. Унизу також є кнопки стрілок і стрибка.</p></details><details><summary>♥ Життя та перешкоди</summary><p>На початку маєш три життя. Зіткнення забирає одне, і Лев наближається. Третє зіткнення завершує забіг. Колоди, каміння й невисокі перешкоди перестрибуй або оминай. Дерева оминай зміною смуги. На автомобільних дорогах стеж за транспортом; високі машини надійніше обходити.</p></details><details><summary>🧀 Сир і баланс</summary><p>Підхоплюй сир Мишкою. Кожен шматочок додається і до лічильника поточного забігу, і до загального балансу. Баланс витрачається в магазині та обміні. Сир за місії й соцмережі надходить лише на баланс: він не прискорює біг і не наближає наступний суперстрибок.</p></details><details><summary>⚡ Темп і суперстрибок</summary><p>Кожні 100 сирів, зібраних на стежці, підвищують темп до кінця забігу; розгін поступовий. Суперстрибки ↑ заздалегідь розкладені у випадкових місцях маршруту та не залежать від зібраного сиру. Підхопи його: протягом 20 секунд стрибки стають удвічі вищими. Новий підібраний суперстрибок додає ще 20 секунд. Блок «До бонусів» прихований, але механіка працює.</p></details><details><summary>🧲 Магніт</summary><p>Магніти з’являються через випадкові проміжки 1500–5000 метрів. Після підбирання магніт діє 12 секунд: сусідній сир плавно летить до Мишки. Магніт притягує лише сир, а інші бонуси й ключики треба підхоплювати самому. Якщо пропустити предмет, ефект не ввімкнеться.</p></details><details><summary>🛡 Щит</summary><p>Один щит з’являється за забіг у випадковий момент між 1500 і 5000 м, незалежно від місій. Підхопи його: він захистить від одного зіткнення й зникне. Щит не рятує від потрапляння у воду або затримки на крокодилі.</p></details><details><summary>⏱ Сповільнення часу</summary><p>Предмети сповільнення розкидані вздовж маршруту через випадкові проміжки 800–1400 м. Після підбирання ігровий світ сповільнюється вдвічі на 5 секунд. Мишка, Лев і транспорт сповільнюються разом. Відлік двох секунд на крокодилі від цього не подовжується.</p></details><details><summary>🎯 Дві місії за забіг</summary><p>На кожен новий забіг обираються дві випадкові місії різних типів: збирати сир, долати відстань, стрибати або перестрибувати колоди. Точні умови й прогрес видно на темній плашці та у вкладці «Завдання та нагороди». Кожна виконана місія автоматично дає 100 сиру — максимум 200 за забіг. Невиконаний прогрес не переноситься, а наступний забіг отримує нову пару.</p></details><details><summary>🌲 Локації</summary><p>На маршруті чергуються лісова стежка, дерев’яні місточки над річкою, тунелі з гілок і квіткові галявини. Риби у воді та бігуни збоку — декорації. Звичайний місток має прохід, а крокодиляча переправа потребує стрибків.</p></details><details><summary>🐊 Крокодиляча переправа</summary><p>Додаткова переправа трапляється кожні 3000 м. Біля входу є коротка чиста ділянка та підказка. Автоматичної зупинки перед водою немає: стрибай із берега! Допомога доводить стрибок тільки до першого крокодила, навіть із суперстрибком. Далі в кожному ряду один крокодил, смуги чергуються: стрибай і змінюй смугу в повітрі самостійно. Між крокодилами — лише стрибки. Приземлився у воду — забіг завершено. На одній спині можна залишатися менше 2 секунд; відлік показаний на екрані. Після останнього крокодила стрибай на піщаний берег, який переходить у стежку.</p></details><details><summary>🔑 Ключики на маршруті</summary><p>За забіг можуть з’явитися два ключики: перший після випадкової позначки 4000–7000 м, другий ще через 2500–5000 м. Предмет розміщується попереду на вільному місці, тому його фактичне підбирання може бути трохи пізніше. Підхоплений ключик додається у твій запас і зберігається так само, як сир. У меню «Скрині та ключі» витрать 1 🔑, щоб відкрити одну скриню. Пропущений ключик у запас не потрапляє.</p></details><details><summary>🎁 Колекція та кейси</summary><p>Скриня за 1 🔑 дає один випадковий скін або аксесуар зі своєї колекції, якого ти ще не маєш. Річ залишається відкритою назавжди на цьому пристрої. Повторів немає. Отриманий образ знайдеш у гардеробі — його треба вибрати. Коли вся колекція кейсів відкрита, нових речей із них уже немає.</p></details><details><summary>👗 Скіни й аксесуари</summary><p>Відкрий кнопку «Скін» у меню. У гардеробі є вкладки скінів та аксесуарів. Речі з ціною купуються за сир із балансу: сума списується один раз, повторне одягання безкоштовне. Позначка «Лише з кейса» означає, що річ не продається за сир. Можна вибрати один скін та один аксесуар; аксесуар можна зняти. Образи змінюють зовнішність, а не швидкість чи силу бонусів.</p></details><details><summary>🔄 Обмін</summary><p>У меню «Скрині та ключі» 15 000 зібраного у грі сиру обмінюються на 3 ключики. Ключики також можна назбирати на маршруті. Вони зберігаються у запасі. Відкриття однієї скрині коштує 1 🔑 і дає одну нову річ без повторів.</p></details><details><summary>📱 Соцмережі та нагороди</summary><p>Кнопки Instagram, Telegram і TikTok відкривають сторінки автора в новій вкладці. За перший перехід у кожну мережу отримуєш 100 сиру на баланс, разом — до 300. Нагорода одноразова на цьому пристрої й у цьому браузері. Гра нараховує її за перехід, а не перевіряє підписку.</p></details><details><summary>💾 Збереження прогресу</summary><p>Баланс, відкриті речі, ключики обміну та нагороди соцмереж зберігаються в цьому браузері. Поточний забіг після перезавантаження не відновлюється. Рекорд надсилається до спільної таблиці тільки після підключення сервера. Повний доступ до колекції та прогресу на іншому пристрої не переноситься автоматично.</p></details><details><summary>⚙ Пауза й налаштування</summary><p>Кнопка паузи або Esc зупиняє забіг і таймери, включно з відліком на крокодилі. Повернення в меню починає новий забіг із новими місіями. У налаштуваннях можна змінити якість графіки, звук і вібрацію. На слабкому пристрої зменш якість; вібрація працює лише там, де її підтримує браузер.</p></details></div><button id="help-back" class="primary" style="width:100%;margin-top:18px">Зрозуміло →</button></section>
 <section id="quests" class="panel card" hidden><p class="kicker">Маленькі перемоги</p><h2>Завдання та нагороди</h2><p id="quest-summary">Виконай кожне завдання за один забіг.</p><div id="quest-list"></div><p class="setting-note">На кожен забіг випадають дві місії різних типів. Кожна дає +100 сиру один раз за забіг. У новому забігу можна виконати його знову. Щит не залежить від місій: він з’являється один раз за забіг між 1500 і 5000 м. Підхопи його Мишкою. Нагородний сир додається до загального запасу, а не до сиру на стежці.</p><div hidden><label class="setting" for="reward-choice">Аксесуар</label><select id="reward-choice"></select><button id="accessory-buy" class="secondary" style="width:100%;margin-top:10px">Одягнути</button></div><button id="quests-back" class="primary" style="width:100%;margin-top:16px">Назад</button></section>
 <section id="settings" class="panel card" hidden><h2>Налаштування</h2><label class="setting" for="quality">Графіка<select id="quality"><option value="auto">Авто</option><option value="low">Економна</option><option value="high">Висока</option></select></label><label class="setting" for="sound-enabled">Звуки лісу та гри<input id="sound-enabled" type="checkbox" checked></label><label class="setting" for="vibration">Вібрація<input id="vibration" type="checkbox" checked></label><p id="vibration-note" class="setting-note">Короткий відгук при стрибку та зіткненні.</p><div class="actions"><button id="fullscreen" class="secondary">На весь екран</button><button id="settings-back" class="primary">Готово</button></div></section>
 <section id="paused" class="panel card" hidden><p class="kicker">ДВІ МІСІЇ · v26</p><h2>Пауза</h2><div class="actions"><button id="resume" class="primary">Продовжити</button><button id="restart" class="secondary">Спочатку</button><button id="pause-quests" class="secondary">Завдання та нагороди</button><button id="pause-settings" class="secondary">Налаштування</button><button id="pause-menu" class="secondary">У меню</button></div></section>
@@ -198,7 +205,7 @@ h2{font-size:29px;letter-spacing:-1px;line-height:1.1;margin:0 0 16px}
 const $=id=>document.getElementById(id),app=$('app'),canvas=$('world');
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),lerp=(a,b,t)=>a+(b-a)*t;
 const C=hex=>[parseInt(hex.slice(0,2),16)/255,parseInt(hex.slice(2,4),16)/255,parseInt(hex.slice(4,6),16)/255];
-const COLORS={fur:C('afc1b5'),paw:C('dfa59c'),dark:C('273f38'),pink:C('e8afa6'),lion:C('dfaa58'),mane:C('986038'),wood:C('9f7040'),gold:C('ffd06a'),cream:C('fff0c3'),stone:C('8a9c9d')};
+const COLORS={fur:C('b9c9c0'),paw:C('f0afa8'),dark:C('27423b'),pink:C('f3b6b0'),lion:C('e7b35f'),mane:C('9c6736'),wood:C('a8733f'),gold:C('ffd85f'),cream:C('fff0bd'),stone:C('91a9ad')};
 COLORS.cheese=[...C('ffda45'),1]; // Emoji-yellow cheese with gentle shading, never brown in shadow.
 const CHEESE_HOLE=[...C('efa52a'),1],CHEESE_RIM=[...C('ffc234'),1];
 const ANIMAL={lion:C('cba260'),lionLight:C('e5c28b'),lionBelly:C('ead6b0'),lionShade:C('b58a4c'),mane:C('8b602e'),maneLight:C('b58a46'),maneDark:C('644322'),nose:C('352a24'),eye:C('211c15'),amber:C('b7893f'),mouse:C('9e9992'),mouseBack:C('858078'),mouseBelly:C('d8cec0'),ear:C('d8a29f'),paw:C('c18f87'),whisker:C('e2d6bd'),white:C('fff5da'),straw:C('b89357'),strawDark:C('745735')};
@@ -564,7 +571,7 @@ function initGraphics(){
   inst=version2?{divisor:(a,d)=>gl.vertexAttribDivisor(a,d),draw:(n,c)=>gl.drawArraysInstanced(gl.TRIANGLES,0,n,c)}:ext?{divisor:(a,d)=>ext.vertexAttribDivisorANGLE(a,d),draw:(n,c)=>ext.drawArraysInstancedANGLE(gl.TRIANGLES,0,n,c)}:null;
   const prefix=version2?'#version 300 es\n':'',attr=version2?'in':'attribute',vary=version2?'out':'varying';
   const vs=prefix+'precision highp float;\n'+attr+' vec3 aPos;'+attr+' vec3 aNormal;'+attr+' vec3 aTone;'+attr+' vec4 m0;'+attr+' vec4 m1;'+attr+' vec4 m2;'+attr+' vec4 m3;'+attr+' vec4 color;\nuniform mat4 uVP;\n'+vary+' vec3 normal;'+vary+' vec3 world;'+vary+' vec3 surface;'+vary+' vec4 tint;\nvoid main(){mat4 model=mat4(m0,m1,m2,m3);vec4 p=model*vec4(aPos,1.);world=p.xyz;surface=aPos;normal=normalize(mat3(m0.xyz/max(dot(m0.xyz,m0.xyz),.0001),m1.xyz/max(dot(m1.xyz,m1.xyz),.0001),m2.xyz/max(dot(m2.xyz,m2.xyz),.0001))*aNormal);tint=vec4(color.rgb*aTone,color.a);gl_Position=uVP*p;}';
-  const fs=prefix+'#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n'+(version2?'in':'varying')+' vec3 normal;'+(version2?'in':'varying')+' vec3 world;'+(version2?'in':'varying')+' vec3 surface;'+(version2?'in':'varying')+' vec4 tint;\nuniform float uMaterial;uniform float uTime;uniform float uTravel;uniform vec3 uFog;uniform vec3 uEye;'+(version2?'out vec4 frag;':'')+'\nfloat strandHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*437.585);}float strandNoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(strandHash(i),strandHash(i+vec2(1.,0.)),f.x),mix(strandHash(i+vec2(0.,1.)),strandHash(i+vec2(1.,1.)),f.x),f.y);}void main(){float diffuse=max(dot(normalize(normal),normalize(vec3(-.5,.9,-.3))),0.);float glow=tint.a<0.?1.:0.;float light=mix(.63+.37*diffuse,.84+.16*diffuse,glow);vec3 col=tint.rgb*light;if(uMaterial>.5&&uMaterial<5.){col=tint.rgb*(.43+.57*diffuse);float grain=sin(dot(surface,vec3(183.3,71.7,137.9)))*sin(dot(surface,vec3(91.1,173.3,59.7)));float strands=sin(surface.x*260.+sin(surface.z*53.)*2.+surface.y*19.);float detail=uMaterial<2.5?(.11*(strandNoise(surface.xz*95.+vec2(surface.y*9.,surface.y*3.))-.5)+.012*grain):(uMaterial>3.5?.012*grain:.018*grain+.012*sin(surface.y*180.)*sin(surface.x*180.));float mask=smoothstep(.10,.28,max(tint.r,max(tint.g,tint.b)));col*=1.+detail*mask*(1.-smoothstep(8.,24.,distance(world,uEye)));vec3 N=normalize(normal),V=normalize(uEye-world);float rim=pow(1.-max(dot(N,V),0.),3.);col+=tint.rgb*rim*(uMaterial<2.5?.10:.04);}if(uMaterial>5.5){float nearDetail=1.-smoothstep(22.,90.,distance(world,uEye));if(uMaterial<6.5){float grain=strandNoise(surface.xz*31.+vec2(sin(surface.y*2.1),surface.y*.17));float grooves=pow(.5+.5*sin((surface.x+surface.z)*73.+grain*4.),5.);col*=1.+nearDetail*(.20*(grain-.5)-.24*grooves);col+=tint.rgb*vec3(.10,.065,.018)*diffuse;}else if(uMaterial<7.5){float cluster=strandNoise(surface.xz*5.+surface.y*.9);col*=.72+.36*cluster;float back=max(dot(-normalize(normal),normalize(vec3(-.5,.9,-.3))),0.);col+=tint.rgb*back*.13;}else{float fleck=strandNoise(surface.xz*19.);col*=1.+nearDetail*(fleck-.5)*.20;}}if(uMaterial>8.5){vec2 uv=vec2(world.x,world.z+uTravel);float detailFade=1.-smoothstep(24.,90.,distance(world,uEye));if(uMaterial<9.5){float mineral=strandNoise(surface.xz*17.+surface.y*9.);float vein=smoothstep(.46,.52,strandNoise(surface.xz*5.+surface.y));col*=.82+.35*mineral;col+=vec3(.065,.067,.058)*vein*detailFade;}else if(uMaterial<10.5){float rings=.5+.5*sin(length(surface.xz)*68.+strandNoise(surface.xz*7.)*2.);col*=.76+.24*rings;}else if(uMaterial<11.5){float wave=sin(uv.x*2.4+uv.y*.9+uTime*.65)*sin(uv.y*3.1-uv.x*.7-uTime*.45);float gleam=pow(max(0.,wave),12.);col=tint.rgb*(.77+.12*wave)+vec3(.20,.24,.22)*gleam;col=mix(col,uFog,.12);}else{float grain=strandNoise(uv*22.);float mottled=strandNoise(uv*.55);col*=.88+.12*mottled+detailFade*(grain-.5)*.12;float shade=smoothstep(.40,.70,strandNoise(uv*.30+vec2(3.,4.)));col*=1.-shade*.14*detailFade;}}float fog=smoothstep(62.,209.,distance(world,uEye))*(1.-.65*glow);'+(version2?'frag':'gl_FragColor')+'=vec4(mix(col,uFog,fog),abs(tint.a));}';
+  const fs=prefix+'#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n'+(version2?'in':'varying')+' vec3 normal;'+(version2?'in':'varying')+' vec3 world;'+(version2?'in':'varying')+' vec3 surface;'+(version2?'in':'varying')+' vec4 tint;\nuniform float uMaterial;uniform float uTime;uniform float uTravel;uniform vec3 uFog;uniform vec3 uEye;'+(version2?'out vec4 frag;':'')+'\nfloat strandHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*437.585);}float strandNoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(strandHash(i),strandHash(i+vec2(1.,0.)),f.x),mix(strandHash(i+vec2(0.,1.)),strandHash(i+vec2(1.,1.)),f.x),f.y);}void main(){float diffuse=max(dot(normalize(normal),normalize(vec3(-.5,.9,-.3))),0.);float glow=tint.a<0.?1.:0.;float toon=diffuse>.72?1.0:(diffuse>.38?.82:.66);float light=mix(toon,.90+.10*toon,glow);vec3 col=tint.rgb*light;if(uMaterial>.5&&uMaterial<5.){col=tint.rgb*(.43+.57*diffuse);float grain=sin(dot(surface,vec3(183.3,71.7,137.9)))*sin(dot(surface,vec3(91.1,173.3,59.7)));float strands=sin(surface.x*260.+sin(surface.z*53.)*2.+surface.y*19.);float detail=uMaterial<2.5?(.035*(strandNoise(surface.xz*34.+vec2(surface.y*3.,surface.y))-.5)):(uMaterial>3.5?.004*grain:.008*grain);float mask=smoothstep(.10,.28,max(tint.r,max(tint.g,tint.b)));col*=1.+detail*mask*(1.-smoothstep(8.,24.,distance(world,uEye)));vec3 N=normalize(normal),V=normalize(uEye-world);float rim=pow(1.-max(dot(N,V),0.),3.);col+=tint.rgb*rim*(uMaterial<2.5?.055:.025);}if(uMaterial>5.5){float nearDetail=1.-smoothstep(22.,90.,distance(world,uEye));if(uMaterial<6.5){float grain=strandNoise(surface.xz*31.+vec2(sin(surface.y*2.1),surface.y*.17));float grooves=pow(.5+.5*sin((surface.x+surface.z)*73.+grain*4.),5.);col*=1.+nearDetail*(.07*(grain-.5)-.08*grooves);col+=tint.rgb*vec3(.10,.065,.018)*diffuse;}else if(uMaterial<7.5){float cluster=strandNoise(surface.xz*5.+surface.y*.9);col*=.88+.18*cluster;float back=max(dot(-normalize(normal),normalize(vec3(-.5,.9,-.3))),0.);col+=tint.rgb*back*.13;}else{float fleck=strandNoise(surface.xz*19.);col*=1.+nearDetail*(fleck-.5)*.07;}}if(uMaterial>8.5){vec2 uv=vec2(world.x,world.z+uTravel);float detailFade=1.-smoothstep(24.,90.,distance(world,uEye));if(uMaterial<9.5){float mineral=strandNoise(surface.xz*17.+surface.y*9.);float vein=smoothstep(.46,.52,strandNoise(surface.xz*5.+surface.y));col*=.92+.14*mineral;col+=vec3(.025,.028,.024)*vein*detailFade;}else if(uMaterial<10.5){float rings=.5+.5*sin(length(surface.xz)*68.+strandNoise(surface.xz*7.)*2.);col*=.88+.12*rings;}else if(uMaterial<11.5){float wave=sin(uv.x*1.7+uv.y*.72+uTime*.55)*sin(uv.y*2.0-uv.x*.45-uTime*.38);float band=wave>.28?1.08:(wave<-.28?.82:.94);col=tint.rgb*band;col=mix(col,uFog,.08);}else{float grain=strandNoise(uv*22.);float mottled=strandNoise(uv*.55);col*=.96+.06*mottled+detailFade*(grain-.5)*.035;float shade=smoothstep(.46,.72,strandNoise(uv*.24+vec2(3.,4.)));col*=1.-shade*.055*detailFade;}}float luma=dot(col,vec3(.299,.587,.114));col=mix(vec3(luma),col,.92);col*=.90;col=clamp(col,0.,1.);col=floor(col*20.+.5)/20.;float fog=smoothstep(72.,218.,distance(world,uEye))*(1.-.65*glow);'+(version2?'frag':'gl_FragColor')+'=vec4(mix(col,uFog,fog),abs(tint.a));}';
   program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vs));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fs));
   ['aPos','aNormal','m0','m1','m2','m3','color','aTone'].forEach((name,i)=>gl.bindAttribLocation(program,i,name));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
   gl.useProgram(program);uniforms={vp:gl.getUniformLocation(program,'uVP'),fog:gl.getUniformLocation(program,'uFog'),eye:gl.getUniformLocation(program,'uEye'),material:gl.getUniformLocation(program,'uMaterial'),time:gl.getUniformLocation(program,'uTime'),travel:gl.getUniformLocation(program,'uTravel')};
@@ -638,10 +645,10 @@ function flush(){
   gl.depthMask(true);
 }
 const seasons=[
-  {name:'Літній ліс',fog:C('b8ddd4'),ground:C('80aa66'),leaf:C('39865b'),trail:C('c5aa77')},
-  {name:'Золота осінь',fog:C('e7c2a0'),ground:C('b79558'),leaf:C('c98746'),trail:C('bda078')},
-  {name:'Сніжна долина',fog:C('c9e0ed'),ground:C('d8e8ea'),leaf:C('93bfb7'),trail:C('a9c4d0')},
-  {name:'Ніч світлячків',fog:C('142c46'),ground:C('244541'),leaf:C('26594b'),trail:C('668a90')}
+  {name:'Літній ліс',fog:C('bfe9df'),ground:C('78b868'),leaf:C('2f9258'),trail:C('d2b77f')},
+  {name:'Золота осінь',fog:C('f2c9a6'),ground:C('c29b58'),leaf:C('dd8740'),trail:C('c9a36f')},
+  {name:'Сніжна долина',fog:C('d7eff9'),ground:C('e8f3f4'),leaf:C('9fd0c4'),trail:C('b6d5df')},
+  {name:'Ніч світлячків',fog:C('173653'),ground:C('28544d'),leaf:C('2c6d58'),trail:C('719aa2')}
 ];
 const theme={name:'Літній ліс',fog:new Float32Array(3),ground:new Float32Array(3),leaf:new Float32Array(3),trail:new Float32Array(3),snow:0,autumn:0};
 let mode='menu',settingsReturn='menu',menuClock=0,seed=1,lastPointerAction=-1000;
@@ -928,21 +935,23 @@ function spawnBonusPickup(type,z){
 function caseRewards(){return [...MOUSE_SKINS.filter(s=>s.caseOnly&&!ownedSkins.has(s.id)).map(s=>({kind:'skin',id:s.id,name:s.name})),...ACCESSORIES.filter(a=>a.caseReward&&!ownedAccessories.has(a.id)).map(a=>({kind:'accessory',id:a.id,name:a.label}))];}
 function refreshExchange(){
   const left=caseRewards().length;
-  $('exchange-wallet').textContent='Баланс: '+totalCheese+' 🧀 · Ключики: '+exchangeKeys+' 🔑';
-  $('exchange-buy').disabled=totalCheese<15000||exchangeKeys>=left;
-  $('exchange-buy').textContent=!left?'Уся колекція відкрита':exchangeKeys>=left?'Ключиків вистачає на решту колекції':totalCheese<15000?'Бракує '+(15000-totalCheese)+' 🧀':'Обміняти 15 000 🧀 → 1 🔑';
+  $('exchange-wallet').textContent='Баланс: '+totalCheese+' 🧀 · Ключики: '+exchangeKeys+' 🔑 · Речей у скринях: '+left;
+  $('exchange-buy').disabled=totalCheese<15000||left===0;
+  $('exchange-buy').textContent=!left?'Уся колекція відкрита':totalCheese<15000?'Бракує '+(15000-totalCheese)+' 🧀':'Обміняти 15 000 🧀 → 3 🔑';
   $('exchange-use').disabled=exchangeKeys<1||left===0;
+  $('exchange-use').textContent=!left?'🎁 Усі скрині відкриті':exchangeKeys<1?'Потрібен 1 🔑':'🎁 Відкрити скриню · 1 🔑';
 }
 function exchangeCheese(){
-  if(totalCheese<15000||exchangeKeys>=caseRewards().length)return;
-  totalCheese-=15000;exchangeKeys++;saveWallet();refreshSkinLocks();refreshExchange();
-  $('exchange-result').textContent='Отримано 1 ключик. Можеш відкрити кейс або зберегти його.';
+  if(totalCheese<15000||caseRewards().length===0)return;
+  totalCheese-=15000;exchangeKeys+=3;saveWallet();refreshSkinLocks();refreshExchange();
+  $('exchange-result').textContent='Отримано 3 ключики 🔑🔑🔑. Відкривай скрині зараз або збережи ключі на потім.';
+  sound('bonus');
 }
 function openExchangeCase(){
   const pool=caseRewards();if(exchangeKeys<1||!pool.length)return;
   const reward=pool[Math.floor(Math.random()*pool.length)];exchangeKeys--;
   (reward.kind==='skin'?ownedSkins:ownedAccessories).add(reward.id);saveWallet();refreshSkinLocks();refreshExchange();
-  $('exchange-result').textContent='Відкрито назавжди: '+reward.name+'! Знайди в гардеробі.';sound('bonus');
+  $('exchange-result').textContent='🎁 У скрині: '+reward.name+'! Річ відкрита назавжди — знайди її в гардеробі.';sound('bonus');
 }
 function collectCase(){
   if(run.caseCollected>=2)return;run.caseCollected++;
@@ -957,7 +966,7 @@ function collectBonus(o){
   o.used=true;
   if(o.type==='heart'){const healed=run.hits>0;run.hits=Math.max(0,run.hits-1);lastHearts=-1;toast(healed?'❤️ +1 життя!':'❤️ Життя вже повні');sound('bonus');syncHUD();return;}
   if(o.type==='swap'){startSwap();return;}
-  if(o.type==='case'){collectCase();return;}
+  if(o.type==='case'){exchangeKeys++;saveWallet();refreshExchange();toast('🔑 Ключик зібрано! У запасі: '+exchangeKeys+' 🔑');sound('bonus');return;}
   if(o.type==='magnet'){run.magnetTime=12;toast('🧲 Магніт спіймано · 12 секунд');}
   else if(o.type==='superjump'){run.powerTime+=POWER_SECONDS;run.powerDuration=run.powerTime;toast('↑ Суперстрибок спіймано · +20 секунд');}
   else{run.shield=true;toast('🛡 Щит спіймано · захист від одного зіткнення');}
@@ -1186,6 +1195,10 @@ function mouseModel(clock,giant=false){
   mouseExtras(standing,clock);
   for(const side of [-1,1])for(const front of [false,true])animalLeg(side,front,gait,bob,true,tuck,standing);
   add('mouseHead',0,.77,.60,1,1,1,WHITE,standing?-.025:giant?0:Math.sin(gait)*.018*(1-tuck),turn*.32,0);
+  // Extra face detail keeps the Mouse readable on a phone-sized screen.
+  skinPart(0,.77,1.18,.075,.065,.075,ANIMAL.nose);
+  if(options.quality!=='low')for(const side of [-1,1])for(const dy of [-.035,.035])
+    bone(side*.055,.79+dy,1.12,side*.52,.81+dy,1.30,.009,ANIMAL.whisker);
   let ax=0,ay=.53,az=-.75;
   for(let i=1;i<=10;i++){
     const f=i/10,bx=Math.sin(f*2.4-clock*(giant?1.5:4))*(giant?.055:.16)*f-turn*f*.6,by=.53-f*.34+Math.sin(f*Math.PI)*.035+tuck*f*.08,bz=-.75-f*1.22;
@@ -1215,24 +1228,48 @@ function lionModel(clock){
 const JOGGER_SHIRTS=['e88963','689fd2','b79adb','72b6a2'].map(C);
 const JOGGER_SKIN=['d9ab85','9a684e','edc2a0','bc8762'].map(C),JOGGER_SHORTS=C('374f60');
 const RUNNER_THOUGHTS=["Ого, яка швидка Мишка!", "А сиром поділишся?", "Сьогодні мій день!", "Ще трохи — і відпочинок.", "Лев теж на пробіжці?", "Який гарний ліс!", "Головне — не перечепитися.", "Після бігу — чай!", "Хто забув сир на дорозі?", "Крокодили теж люблять спорт?", "Треба частіше виходити надвір.", "Пташки сьогодні співають!", "Мій рекорд ще попереду.", "Обережно, машини!", "Оце так пригода!", "Поплаваю трохи.", "Цікаво, що за поворотом?", "Мишко, гарного забігу!"];
+function scenicRunnerSafeZone(z){
+  const route=routeAt(z);
+  if(!["forest","tunnel"].includes(route)) return false;
+  if(run.objects.some(o=>o.type==="road"&&Math.abs(o.z-z)<ROAD_HALF+12)) return false;
+  if(crocApproach(z)||crocZone(z)!==null||crocExit(z)!==null) return false;
+  return true;
+}
+function scenicRunnerBaseX(r,z=r.z){
+  const route=routeAt(z);
+  const shoulder=route==="tunnel"?2.35:2.55;
+  return (r.side||1)*shoulder;
+}
 function spawnScenicRunners(){
-  while(run.nextRunner<run.travel+240){
-    const z=run.nextRunner;run.nextRunner+=45+Math.floor(rng()*35);
-    if(run.objects.some(o=>o.type==='road'&&Math.abs(o.z-z)<ROAD_HALF+4))continue;
-    run.runners.push({serial:++run.runnerSerial,x:(rng()<.5?-1:1)*3.72,z,speed:2.6+rng(),stride:rng()*6,style:Math.floor(rng()*4),waiting:false,thought:null,thoughtLeft:0,thoughtShown:false});
+  while(run.nextRunner<run.travel+180){
+    const z=run.nextRunner;run.nextRunner+=92+Math.floor(rng()*68);
+    if(run.objects.some(o=>o.type==='road'&&Math.abs(o.z-z)<ROAD_HALF+5)) continue;
+    if(rng()<.35) continue;
+    const route=routeAt(z);
+    const side=rng()<.5?-1:1;
+    const baseX=(route==='tunnel'?2.35:route==='crocodiles'?5.8:2.55);
+    run.runners.push({serial:++run.runnerSerial,side,baseX:side*baseX,x:side*baseX,z,speed:2.35+rng()*.65,stride:rng()*6,style:Math.floor(rng()*4),waiting:false,thought:null,thoughtLeft:0,thoughtShown:false});
   }
 }
 function advanceScenicRunner(r,dt){
-  const water=joggerInWater(r.z);r.fleeing=false;
+  const water=joggerInWater(r.z);
+  r.fleeing=false;
   if(water){
     r.fleeing=true;
     if(!r.pursuer){const base=crocZone(r.z);r.pursuer={x:r.x,z:Math.max(base+1,r.z-5)};}
-    const side=Math.sign(r.x)||1,targetX=side*(6+Math.sin(r.z*.22+r.style)*.45);
+    const side=Math.sign(r.x)||1,targetX=side*(5.95+Math.sin(r.z*.22+r.style)*.25);
     r.x+=(targetX-r.x)*(1-Math.exp(-2*dt));r.swimYaw=clamp((targetX-r.x)*.35,-.4,.4);
-  }else{r.pursuer=null;r.x+=(Math.sign(r.x||1)*3.72-r.x)*(1-Math.exp(-3*dt));r.swimYaw=0;}
-  let step=r.speed*dt*(water?(r.fleeing?1.25:.55):1);r.waiting=false;
+  }else{
+    r.pursuer=null;
+    const targetX=scenicRunnerBaseX(r, r.z);
+    r.baseX=targetX;
+    r.x+=(targetX-r.x)*(1-Math.exp(-5*dt));
+    r.x=clamp(r.x,targetX-.14,targetX+.14);
+    r.swimYaw=0;
+  }
+  let step=r.speed*dt*(water?(r.fleeing?1.2:.55):1);r.waiting=false;
   for(const o of run.objects)if(o.type==='road'){
-    const edge=o.z-ROAD_HALF-1.4;
+    const edge=o.z-ROAD_HALF-2.1;
     if(r.z<=edge&&r.z+step>=edge){step=Math.max(0,edge-r.z);r.waiting=true;}
   }
   r.z+=step;if(!r.waiting)r.stride+=step;
@@ -1276,54 +1313,107 @@ function joggerModel(r){
     if(r.pursuer)crocodileModel(r.pursuer.x,r.pursuer.z-run.travel,run.time,r.style,true,Math.atan2(r.x-r.pursuer.x,Math.max(.1,r.z-r.pursuer.z)));
     swimmerModel(r,z);return;
   }
-  const phase=r.waiting?0:r.stride*2.7,bob=r.waiting?0:Math.cos(phase*2)*.035;
+  const phase=r.waiting?0:r.stride*2.7,bob=r.waiting?0:Math.cos(phase*2)*.032;
   const skin=JOGGER_SKIN[r.style],shirt=JOGGER_SHIRTS[r.style];
+  const hair=[C('5a4435'),C('2d2926'),C('7a553a'),C('3d312b')][r.style];
   drawAlpha=1;
-  shadow(r.x,z,.38,.48);beginGroup(r.x,.025,z);
-  add('runnerCloth',0,1.30+bob,0,.245,.37,.17,shirt);
-  skinPart(0,1.58+bob,.055,.115,.035,.12,WHITE);
-  skinPart(0,1.31+bob,.173,.017,.22,.009,WHITE);
-  add('runnerCloth',0,1.52+bob,.005,.29,.13,.165,shirt);
-  skinPart(0,.94+bob,0,.25,.16,.18,JOGGER_SHORTS);
-  muscle(0,1.59+bob,0,0,1.73+bob,0,.09,skin);
-  skinPart(0,1.89+bob,.025,.16,.215,.16,skin);
-  skinPart(0,1.765+bob,.09,.125,.085,.12,skin);
-  skinPart(0,1.88+bob,.186,.037,.055,.06,skin);
+  shadow(r.x,z,.40,.50);beginGroup(r.x,.025,z);
+  add('runnerCloth',0,.91+bob,0,.23,.15,.17,JOGGER_SHORTS);
+  add('runnerCloth',0,1.30+bob,0,.24,.36,.16,shirt);
+  muscle(-.22,1.51+bob,0,.22,1.51+bob,0,.095,shirt);
+  muscle(0,1.48+bob,0,0,1.64+bob,0,.075,skin);
+  ball(0,1.83+bob,.015,.155,.195,.155,skin);
+  ball(-.155,1.83+bob,.012,.035,.055,.032,skin);
+  ball(.155,1.83+bob,.012,.035,.055,.032,skin);
+  ball(0,1.82+bob,.158,.032,.030,.040,C('a57667'));
+  for(const side of [-1,1])ball(side*.058,1.875+bob,.145,.014,.015,.010,COLORS.dark);
+  add('runnerCloth',0,1.98+bob,-.018,.165,.055,.155,hair);
+  skinPart(0,1.29+bob,.165,.205,.018,.010,WHITE);
+  skinPart(0,1.50+bob,.145,.12,.018,.010,shirt);
   for(const side of [-1,1]){
-    skinPart(side*.158,1.88+bob,.012,.031,.052,.038,skin);
-    skinPart(side*.068,1.93+bob,.168,.025,.012,.009,COLORS.dark);
-    skinPart(side*.068,1.964+bob,.15,.033,.009,.015,COLORS.wood);
-  }
-  skinPart(0,1.80+bob,.178,.049,.009,.014,C('a57667'));
-  skinPart(0,2.03+bob,.018,.20,.09,.185,shirt);
-  skinPart(0,2.01+bob,.19,.20,.025,.18,shirt);
-  for(const side of [-1,1]){
-    const swing=Math.sin(phase+(side<0?Math.PI:0));
-    const footZ=swing*.34,footY=.09+Math.max(0,Math.cos(phase+(side<0?Math.PI:0)))*.22;
-    const kneeZ=.10+swing*.17,kneeY=.52+bob;
-    muscle(side*.15,.96+bob,0,side*.16,kneeY,kneeZ,.105,JOGGER_SHORTS);
-    skinPart(side*.16,kneeY,kneeZ,.078,.080,.078,skin);
-    muscle(side*.16,kneeY,kneeZ,side*.16,footY,footZ,.068,skin);
-    skinPart(side*.16,footY,footZ+.065,.105,.065,.18,COLORS.cream);
-    const elbowZ=-swing*.22-.04,handZ=elbowZ+.23;
-    muscle(side*.26,1.54+bob,0,side*.34,1.21+bob,elbowZ,.085,shirt);
-    skinPart(side*.34,1.21+bob,elbowZ,.065,.067,.065,skin);
-    muscle(side*.34,1.21+bob,elbowZ,side*.30,1.34+bob,handZ,.060,skin);
-    skinPart(side*.30,1.34+bob,handZ,.073,.075,.075,skin);
+    const legPhase=phase+(side<0?Math.PI:0),swing=Math.sin(legPhase),lift=Math.max(0,Math.cos(legPhase));
+    const hipX=side*.14,kneeX=side*.15,kneeY=.57+bob,kneeZ=.09+swing*.18,footY=.085+lift*.22,footZ=swing*.36;
+    muscle(hipX,.94+bob,0,kneeX,kneeY,kneeZ,.100,JOGGER_SHORTS);
+    ball(kneeX,kneeY,kneeZ,.075,.075,.073,skin);
+    muscle(kneeX,kneeY,kneeZ,side*.15,footY,footZ,.064,skin);
+    add('runnerCloth',side*.15,footY,footZ+.07,.105,.060,.19,COLORS.cream);
+    const armSwing=-swing,shoulderX=side*.25,shoulderY=1.50+bob,elbowX=side*.34,elbowY=1.23+bob,elbowZ=armSwing*.21-.035,handX=side*.30,handY=1.33+bob,handZ=elbowZ+armSwing*.16+.14;
+    muscle(shoulderX,shoulderY,0,elbowX,elbowY,elbowZ,.078,shirt);
+    ball(elbowX,elbowY,elbowZ,.058,.060,.058,skin);
+    muscle(elbowX,elbowY,elbowZ,handX,handY,handZ,.055,skin);
+    ball(handX,handY,handZ,.066,.068,.065,skin);
   }
   group=null;drawAlpha=1;
 }
 function tree(x,z,s=1){
-  shadow(x,z,1.05*s,.8*s);box(x,.975*s,z,.34*s,2.25*s,.35*s,COLORS.wood);
-  add('cone',x,2.05*s,z,1.25*s,2.5*s,1.25*s,theme.leaf);
-  add('cone',x,3.05*s,z,.94*s,2.1*s,.94*s,theme.leaf);
-  add('cone',x,3.92*s,z,.62*s,1.65*s,.62*s,theme.leaf);
+  // Natural-looking cartoon fir: tall trunk, open silhouette, many fine needle tufts.
+  // The gaps between branch tiers keep the path visible through the tree.
+  s*=1.06;
+  const bark=C('71513a'),barkDark=C('4f3b2d');
+  const needle=theme.leaf,needleDark=C('315a43'),needleMid=C('467356');
+  shadow(x,z,1.12*s,.82*s);
+
+  // Taller visible trunk with subtle bark grooves.
+  box(x,1.42*s,z,.22*s,3.05*s,.23*s,bark);
+  for(const side of [-1,1])
+    box(x+side*.135*s,1.35*s,z+.018*s,.014*s,2.45*s,.025*s,barkDark);
+
+  // Sparse whorls: broad low branches, progressively shorter toward the crown.
+  const levels=[.68,.96,1.25,1.55,1.86,2.17,2.47,2.76,3.03,3.28];
+  for(let i=0;i<levels.length;i++){
+    const y=levels[i]*s;
+    const span=(1.34-i*.105)*s;
+    const count=i<4?7:6;
+    for(let k=0;k<count;k++){
+      const a=k*Math.PI*2/count+(i%2)*.32;
+      const droop=(.13+.018*(levels.length-i))*s;
+      const dx=Math.cos(a)*span,dz=Math.sin(a)*span;
+
+      // Brown branch remains partly visible like the reference fir.
+      bone(x,y,z,x+dx,y-droop,z+dz,.035*s,barkDark);
+
+      // Small separated needle clusters rather than solid cones.
+      const tufts=i<3?[.34,.52,.70,.87,1.02]:[.40,.63,.84,1.02];
+      for(let q=0;q<tufts.length;q++){
+        const t=tufts[q],bx=x+dx*t,bz=z+dz*t,by=y-droop*t;
+        const rr=(.105+(q%2)*.025)*s;
+        const hh=(.24+(q%3)*.035)*s;
+        add('cone',bx,by+.035*s,bz,rr,hh,rr,
+            (i+k+q)%3===0?needleDark:((i+k+q)%3===1?needleMid:needle),
+            0,-a,0);
+      }
+
+      // A few short twig tips make the outline less geometric.
+      if((i+k)%2===0){
+        const tx=x+dx*.82,tz=z+dz*.82,ty=y-droop*.82;
+        bone(tx,ty,tz,tx+Math.cos(a+.34)*.24*s,ty+.10*s,tz+Math.sin(a+.34)*.24*s,.018*s,barkDark);
+      }
+    }
+  }
+
+  // Narrow natural crown instead of a chunky triangular cap.
+  for(let i=0;i<4;i++){
+    const yy=(3.34+i*.18)*s;
+    const rr=(.30-i*.055)*s;
+    add('cone',x,yy,z,rr,.52*s,rr,i%2?needle:needleDark);
+  }
 }
 function rock(x,z,s=1){shadow(x,z,.8*s,.65*s);add('naturalRock',x,.33*s,z,.85*s,.56*s,.62*s,COLORS.stone,0,.5,.15);}
 function logModel(x,z){
-  shadow(x,z,1.1,.46);add('logBark',x,.37,z,.36,2.08,.36,COLORS.wood,0,0,Math.PI/2);
-  for(const side of [-1,1])add('woodEnd',x+side*1.05,.37,z,.32,.025,.32,C('d9b879'),0,0,Math.PI/2);
-  box(x-.35,.73,z,.16,.35,.15,COLORS.wood);
+  // Heavier fallen log with visible bark rings, grooves and occasional broken branches.
+  const bark=C('865738'),dark=C('5e3b29'),light=C('ad7b4f');
+  shadow(x,z,1.32,.50);
+  add('logBark',x,.32,z,.35,2.48,.35,bark,0,0,Math.PI/2);
+  for(const side of [-1,1]){
+    add('woodEnd',x+side*1.25,.32,z,.322,.028,.322,C('d3ad70'),0,0,Math.PI/2);
+    add('woodEnd',x+side*1.255,.32,z,.19,.031,.19,C('9a7048'),0,0,Math.PI/2);
+  }
+  // Thin irregular bark bands make the cylinder read as wood up close.
+  for(const dx of [-.92,-.48,.02,.53,.94])add('logBark',x+dx,.32,z,.358,.032,.358,(dx<0?dark:light),0,0,Math.PI/2);
+  // A few natural broken branch stubs, kept short so collision remains fair.
+  bone(x-.55,.48,z-.04,x-.38,.72,z+.17,.060,dark);
+  bone(x+.36,.45,z+.03,x+.55,.64,z-.16,.052,dark);
+  bone(x+.78,.39,z-.10,x+.92,.52,z-.24,.045,dark);
 }
 const red=C('d57251'),asphalt=C('657d7d'),glass=C('b8e3e5'),marking=C('f4e4ae'),flowers=C('e6b886');
 function roadSign(x,z){
@@ -1464,23 +1554,45 @@ function crocAdvance(delta,dt){
 }
 function crocodileModel(x,z,clock,phase,chasing=false,yaw=0){
   if(z<-18||z>190)return;
-  const green=C('537d49'),light=C('78975a'),dark=C('35503a');
+  const green=C('4c8d4f'),light=C('7eae62'),dark=C('2f6139');
   beginGroup(x,0,z,0,0,yaw);
   if(chasing)for(let i=0;i<9;i++)group[i]*=.58;
-  skinPart(0,-.22,0,.925,.25,2.175,green);
-  skinPart(0,-.22,2.28,.69,.23,.85,green);
-  skinPart(0,-.22,2.94,.525,.16,.60,light);
+
+  // Narrower, longer crocodile silhouette.
+  skinPart(0,-.22,-.15,.64,.23,2.30,green);
+  skinPart(0,-.21,2.22,.52,.21,.82,green);
+
+  // Long recognizable crocodile muzzle: narrow at the skull, widening slightly at the nose.
+  skinPart(0,-.20,2.92,.40,.145,.66,light);
+  skinPart(0,-.205,3.48,.46,.115,.34,green);
+  skinPart(0,-.19,3.78,.39,.075,.18,dark);
+
+  // Raised eyes sit behind the muzzle.
   for(const side of [-1,1]){
-    skinPart(side*.46,.05,2.30,.16,.14,.20,light);
-    skinPart(side*.47,.135,2.39,.055,.048,.045,C('eac970'));
-    skinPart(side*.47,.148,2.425,.019,.035,.012,COLORS.dark);
-    for(const dz of [-1.25,1.1])skinPart(side*.93,-.31,dz,.25,.14,.45,green,0,side*.22);
+    skinPart(side*.34,.055,2.40,.135,.13,.18,light);
+    skinPart(side*.35,.145,2.47,.052,.047,.045,C('eac970'));
+    skinPart(side*.35,.157,2.505,.018,.033,.012,COLORS.dark);
+    for(const dz of [-1.25,1.05])skinPart(side*.67,-.31,dz,.21,.13,.40,green,0,side*.20);
   }
-  for(let i=0;i<6;i++)for(const side of [-1,1])add('cone',side*.35,.085,-1.6+i*.56,.12,.16,.15,dark);
-  let ax=0,az=-2.0;
-  for(let i=1;i<=5;i++){const f=i/5,bx=Math.sin(clock*1.8+phase-f*2)*.27*f,bz=-2-f*1.45;muscle(ax,-.25,az,bx,-.26,bz,.26*(1-f*.8),green);ax=bx;az=bz;}
-  // Pale central patch clearly marks the load-bearing part of the back.
-  if(!chasing)skinPart(0,.025,0,.34,.022,.83,light);
+
+  // Back scales kept small so the body stays slim.
+  for(let i=0;i<7;i++)for(const side of [-1,1])
+    add('cone',side*.25,.075,-1.65+i*.50,.09,.13,.11,dark);
+
+  // Thin jaw line and small teeth emphasize the crocodile snout.
+  skinPart(0,-.255,3.28,.43,.025,.58,dark);
+  if(options.quality!=='low')for(let i=-3;i<=3;i++)for(const side of [-1,1])
+    add('cone',side*(.15+Math.abs(i)*.035),-.13,3.20+i*.105,.026,.07,.032,C('f2e6c9'),Math.PI);
+
+  // Long tapered tail.
+  let ax=0,az=-2.25;
+  for(let i=1;i<=6;i++){
+    const f=i/6,bx=Math.sin(clock*1.8+phase-f*2)*.20*f,bz=-2.25-f*1.28;
+    muscle(ax,-.25,az,bx,-.26,bz,.21*(1-f*.82),green);ax=bx;az=bz;
+  }
+
+  // Landing patch remains visible; gameplay/collision logic is unchanged.
+  if(!chasing)skinPart(0,.018,-.05,.28,.020,.88,light);
   group=null;
 }
 function riverFish(first,length,cycle,clock){
@@ -1530,7 +1642,18 @@ function routeGeometry(travel,clock){
       const z=bank+j;if(z<-25||z>160)continue;
       ball(side*(5.5+j*.25),.06,z,.18,.07,.13,C('aa976e'));
     }
-    add('waterSurface',0,-.055,first+24,800,1,48,C('679f8e'),0,0,0,.42);
+    const crocWave=Math.sin(clock*1.12+(first+travel)*.018)*.016;
+    // Deep forest water: dark transparent base + subtle moving reflection/ripple streaks.
+    add('waterSurface',0,-.075+crocWave,first+24,800,1,48,C('164e50'),0,0,0,.66);
+    add('waterSurface',0,-.057+crocWave*.65,first+24,800,1,48,C('2f7774'),0,0,0,.24);
+    for(let r=0;r<12;r++){
+      const rz=first+2.2+r*3.85+Math.sin(clock*.72+r*1.43)*.34;
+      const rx=Math.sin(clock*.48+r*1.91)*3.7;
+      if(rz>-25&&rz<190){
+        add('waterSurface',rx,-.028+crocWave,rz,7.2,1,.030,C('9bc9c1'),0,0,0,.105);
+        if(r%3===0)add('waterSurface',-rx*.55,-.025+crocWave*.8,rz+.7,3.8,1,.022,C('d0e6dd'),0,0,0,.075);
+      }
+    }
     for(let row=0;row<6;row++)crocodileModel(crocLane(row)*2.6,first+3+row*8,clock,row);
   }
   for(let cycle=Math.floor((travel-70)/320);cycle<=Math.ceil((travel+245)/320);cycle++){
@@ -1544,19 +1667,60 @@ function routeGeometry(travel,clock){
 
       if(type==='bridge'){
         riverFish(first,length,cycle,clock);
-        for(const side of [-1,1])add('waterSurface',side*202.25,-.006,first+length/2,395.5,1,length,C('72b6be'),0,0,0,.38);
+        const bridgeWave=Math.sin(clock*1.05+cycle*.07)*.014;
+        for(const side of [-1,1]){
+          add('waterSurface',side*202.25,-.028+bridgeWave,first+length/2,395.5,1,length,C('245f61'),0,0,0,.58);
+          add('waterSurface',side*202.25,-.012+bridgeWave*.55,first+length/2,395.5,1,length,C('3c8180'),0,0,0,.18);
+          for(let r=0;r<7;r++){
+            const rz=first+4+r*(length-8)/6+Math.sin(clock*.72+r*1.4)*.24;
+            add('waterSurface',side*(7.2+Math.sin(clock*.52+r)*1.0),.005+bridgeWave,rz,5.5,1,.026,C('b7d9d4'),0,0,0,.10);
+          }
+        }
         for(let z=Math.max(0,Math.floor((-20-first)/1.2)*1.2);z<length&&first+z<195;z+=1.2){box(0,-.015,first+z+.58,9.0,.08,1.12,C('b99462'));for(const x of [-3.6,3.6])box(x,.028,first+z+.58,.04,.006,.7,C('786346'));}
-        for(const side of [-1,1]){for(let j=0;j<=length;j+=6){const z=first+j;if(z<-20||z>195)continue;box(side*4.75,.72,z,.19,1.5,.19,COLORS.wood);}
-          for(const y of [.5,1.16])box(side*4.75,y,first+length/2,.12,.12,length,C('d1ad73'));
-          for(let j=0;j<7;j++){const z=first+j*7+2;box(side*(8+Math.sin(clock+j)*.2),-.003,z,2.3,.01,.075,C('b1d8d8'));}}
+        for(const side of [-1,1]){
+          // Fence sits directly on the outer bridge planks.
+          for(let j=0;j<=length;j+=5.5){
+            const z=first+j;if(z<-20||z>195)continue;
+            box(side*4.34,.71,z,.20,1.34,.20,COLORS.wood);       // post, bottom touches deck
+            box(side*4.34,.12,z,.34,.13,.34,C('80603f'));      // visible foot/base fixed to plank
+          }
+          for(const y of [.52,1.12])box(side*4.34,y,first+length/2,.13,.13,length,C('c49a63'));
+          // Water glints outside bridge, not fence pieces.
+          for(let j=0;j<7;j++){
+            const z=first+j*7+2;
+            box(side*(8+Math.sin(clock+j)*.2),-.018,z,2.3,.008,.060,C('a9d1cf'));
+          }
+        }
       }else if(type==='tunnel'){
-        for(let j=0;j<=length;j+=low?10:7){const z=first+j;if(z<-20||z>195)continue;
-          for(const side of [-1,1]){bone(side*5.1,0,z,side*4.8,3.7,z,.20,COLORS.wood);bone(side*4.8,3.7,z,side*2.5,5.7,z,.17,COLORS.wood);bone(side*2.5,5.7,z,0,6.25,z,.13,COLORS.wood);ball(side*4.4,4.7,z,.8,.5,1.4,theme.leaf);ball(side*2.1,6,z,1,.32,1.1,theme.leaf);}
+        // Natural branch arch: irregular trunks, twigs and sparse foliage so the path stays readable.
+        for(let j=0;j<=length;j+=low?11:8){const z=first+j;if(z<-20||z>195)continue;
+          const wobble=Math.sin((z+travel)*.17)*.18;
+          for(const side of [-1,1]){
+            const bark=C('755238'),barkDark=C('513a2b');
+            bone(side*5.55,0,z,side*(5.12+wobble),3.30,z+.08,.20,bark);
+            bone(side*(5.12+wobble),3.30,z,side*4.18,4.62,z-.07,.17,bark);
+            bone(side*4.18,4.62,z,side*2.65,5.52,z+.05,.145,bark);
+            bone(side*2.65,5.52,z,side*.82,6.02,z,.115,barkDark);
+            // Small side twigs make the arch look grown, not assembled from smooth beams.
+            bone(side*4.82,3.72,z,side*5.55,4.25,z+.34,.055,barkDark);
+            bone(side*3.72,4.92,z,side*4.42,5.43,z-.30,.050,barkDark);
+            bone(side*2.15,5.72,z,side*2.72,6.15,z+.26,.043,barkDark);
+            for(const p of [[4.95,4.12,.46],[4.18,4.82,.50],[3.28,5.28,.48],[2.33,5.72,.44],[1.42,5.96,.38]]){
+              add('forestShrub',side*p[0],p[1],z,p[2],p[2]*.56,p[2],theme.leaf,0,side*.35);
+            }
+          }
+          // Thin high crown only; no opaque bar across the camera.
+          bone(-.85,6.02,z,.85,6.02,z,.095,C('5b402d'));
+          for(const x of [-.62,0,.62])add('forestShrub',x,6.10,z,.42,.22,.42,theme.leaf);
         }
       }else{
-        box(0,-.004,first+length/2,800,.035,length,theme.ground);
-        box(0,.016,first+length/2,8.5,.008,length,theme.trail);
-        for(let j=0;j<length;j+=low?6:3)for(const side of [-1,1]){const z=first+j;if(z<-20||z>120)continue;const x=side*(5.8+(j%5)*1.4);add('forestFlowers',x,.03,z,1.1,1,1.1,WHITE);if(j%12===0)ball(x+.5,.35,z+.7,.42,.13,.4,C('fff0b2'));}
+        // Flower clearing does not redraw the road, preventing the rectangular seam across the trail.
+        for(let j=0;j<length;j+=low?6:3)for(const side of [-1,1]){
+          const z=first+j;if(z<-20||z>120)continue;
+          const x=side*(7.1+(j%4)*1.35);
+          add('forestFlowers',x,.025,z,.82,.82,.82,WHITE);
+          if(j%12===0)ball(x+side*.45,.30,z+.65,.34,.10,.34,C('fff0b2'));
+        }
       }
     }
   }
@@ -1625,7 +1789,7 @@ function forest(travel,roadAt,clock=0){
     for(const side of [-1,1]){
       const n=id*3+side*13,z=id*density+(side>0?2:0)-travel;
       if(roadAt(z,3.3)||!['forest','approach'].includes(routeAt(z+travel)))continue;
-      const x=side*(5.22+noise(n)*.25),angle=side>0?0:Math.PI,s=.91+noise(n+1)*.13;
+      const x=side*(6.55+noise(n)*.45),angle=side>0?0:Math.PI,s=.82+noise(n+1)*.10;
       add('forestFloor',x,0,z,s,1-theme.snow*.35,s,theme.ground,0,angle);
       if(z<detailEnd-10&&theme.snow<.85)add('forestFlowers',x,.025,z,s,1-theme.snow*.65,s,WHITE,0,angle);
     }
@@ -1664,7 +1828,18 @@ function scene(clock){
       if(o.type==='tree')tree(o.lane*2.6,z,.91);
       else if(o.type==='rock')rock(o.lane*2.6,z);
       else if(o.type==='log')logModel(o.lane*2.6,z);
-      else{shadow(o.lane*2.6,z,1,.7);ball(o.lane*2.6,0,z,1.05,.78,.69,COLORS.wood);}
+      else if(o.type==='hill'){
+        // Earth mound: broad dirt base with an irregular grassy cap, instead of a wooden-looking ball.
+        const hx=o.lane*2.6, dirt=C('76553b'), dirt2=C('8b6746'), grass=theme.ground;
+        shadow(hx,z,1.25,.82);
+        add('naturalRock',hx,.30,z,1.18,.62,.92,dirt,0,.18,.04);
+        add('naturalRock',hx-.28,.40,z+.08,.78,.50,.70,dirt2,0,-.22,-.05);
+        add('naturalRock',hx,.63,z-.02,1.00,.18,.77,grass,0,.12,.02);
+        if(options.quality!=='low'){
+          add('grassTuft',hx-.58,.62,z+.10,.70,.65,.70,grass);
+          add('grassTuft',hx+.48,.60,z-.12,.62,.58,.62,grass,0,.8);
+        }
+      }else{shadow(o.lane*2.6,z,1,.7);ball(o.lane*2.6,0,z,1.05,.78,.69,COLORS.wood);}
       drawAlpha=1;
     }
   }
