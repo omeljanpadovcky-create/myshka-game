@@ -114,6 +114,16 @@ h2{font-size:29px;letter-spacing:-1px;line-height:1.1;margin:0 0 16px}
 #road-warning{top:calc(env(safe-area-inset-top,0px) + 185px)}
 #extra-hud{grid-column:1/-1;justify-self:center;font-size:11px;background:#082b27dc;border-radius:12px;padding:6px 10px;line-height:1.6;text-align:center;max-width:100%}
 #reward-toast{position:absolute;z-index:9;top:30%;left:8%;right:8%;padding:16px;border:1px solid #ffdc85;border-radius:18px;background:#12392ff5;color:#ffe7a7;text-align:center;pointer-events:none;font-size:14px;box-shadow:0 8px 30px #0004}
+/* MYSHKA_GUIDE_EVENTS_V1 */
+#event-banner{position:absolute;z-index:8;top:calc(env(safe-area-inset-top,0px) + 148px);left:50%;transform:translateX(-50%);width:min(88%,340px);padding:9px 13px;border-radius:15px;background:#173e35f2;border:1px solid #ffe09b66;color:#fff1bf;text-align:center;font-size:12px;font-weight:800;box-shadow:0 7px 20px #001d174d;pointer-events:none}
+#event-banner strong{color:#ffe09b}
+#guide-card{position:absolute;z-index:10;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 88px);display:grid;grid-template-columns:54px minmax(0,1fr) 34px;gap:10px;align-items:center;padding:10px 9px 10px 10px;border-radius:20px;background:#f7f0dc;color:#27473d;border:2px solid #d8bb76;box-shadow:0 9px 24px #001f1952;max-width:520px;margin:0 auto}
+#guide-card[hidden]{display:none!important}
+.guide-avatar{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#e5b665,#8b5e35);border:3px solid #fff4cf;font-size:30px;box-shadow:0 3px 0 #8e6b3b}
+.guide-copy{min-width:0;text-align:left}.guide-copy strong{display:block;font-size:13px;color:#183f35;margin-bottom:3px}.guide-copy span{display:block;font-size:12px;line-height:1.35;font-weight:650}
+#guide-close{width:34px;height:34px;padding:0;border-radius:11px;background:#d9caa7;color:#294a3e;font-size:18px;box-shadow:none!important}
+@media(max-height:620px){#guide-card{bottom:76px;padding:7px 8px;grid-template-columns:44px minmax(0,1fr) 32px}.guide-avatar{width:44px;height:44px;font-size:24px}.guide-copy span{font-size:11px}#event-banner{top:112px}}
+
 #quests-open{grid-column:1/-1}#quests{max-height:100%;overflow:auto}.quest-row{text-align:left;padding:12px 0;border-bottom:1px solid #b8d6ac30;font-size:13px;line-height:1.5}.quest-row small{display:block;color:#b7d3ba}.quest-row strong{color:#ffdc85}.quest-track{height:4px;background:#ffffff18;border-radius:8px;margin-top:7px;overflow:hidden}.quest-track i{display:block;height:100%;background:#ffcf7a}
 #quest-summary{color:#bfd9c7;font-size:12px;line-height:1.6}#reward-choice{width:100%;max-width:100%;background:#254e43;color:#fff1d2;border:1px solid #aacb9c66;border-radius:12px;padding:10px;font:inherit;font-size:13px}#quests h2{font-size:26px}#quests .setting-note{margin:10px 0}
 #run-missions{font-size:11px;color:#d5e9ce;line-height:1.6;margin:12px 0}
@@ -243,6 +253,12 @@ button,.btn{filter:saturate(.82) brightness(.92);box-shadow:var(--toon-shadow)!i
 <div id="extra-hud" hidden></div><div id="swap-hud" hidden></div><div id="mission-hud" aria-label="Дві місії цього забігу"></div><div id="power-hud" hidden aria-hidden="true"><div class="power-top"><span id="power-text">До бонусів · 0/100 🧀</span><span id="speed-label" aria-label="Рівень швидкості 1">⚡ Темп 1</span></div><div id="power-meter" role="progressbar" aria-label="Сир до бонусів" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="power-fill"></div></div><div id="slow-hud" hidden></div></div>
 </div>
 <div id="reward-toast" role="status" hidden></div>
+<div id="event-banner" role="status" aria-live="polite" hidden></div>
+<div id="guide-card" role="status" aria-live="polite" hidden>
+  <div class="guide-avatar" aria-hidden="true">🦁</div>
+  <div class="guide-copy"><strong id="guide-name">Левко · гід</strong><span id="guide-text">Тримайся стежки — я підкажу, коли попереду щось цікаве.</span></div>
+  <button id="guide-close" type="button" aria-label="Закрити підказку">×</button>
+</div>
 <div id="croc-hint" hidden role="status"></div><div id="road-warning">Попереду дорога · обережно з авто</div>
 <div id="hit-label" hidden>−1 ♥</div>
 <div id="runner-thoughts" hidden aria-hidden="true"></div><div id="touch-controls" hidden><button id="left" aria-label="Ліворуч"><svg class="icon" viewBox="0 0 24 24"><path d="m14 5-7 7 7 7"/></svg></button><button id="jump"><svg class="icon" viewBox="0 0 24 24"><path d="m5 11 7-7 7 7M12 4v16"/></svg><span id="jump-label">Стрибок</span></button><button id="right" aria-label="Праворуч"><svg class="icon" viewBox="0 0 24 24"><path d="m10 5 7 7-7 7"/></svg></button></div>
@@ -878,7 +894,7 @@ function screen(name){
   if(name==='wheel')refreshWheel();
   if(name==='upgrades')refreshUpgrades();
   if(name==='leaders')refreshLeaders();
-  if(name!=='playing')$('reward-toast').hidden=true;
+  if(name!=='playing'){$('reward-toast').hidden=true;const gc=$('guide-card'),eb=$('event-banner');if(gc)gc.hidden=true;if(eb)eb.hidden=true;}
   updateAudio();
   updateMenuMusic();
   $('screens').hidden=name==='playing';if(name!=='playing')$('croc-hint').hidden=true;
@@ -907,6 +923,7 @@ function resetRun(){
   Object.assign(run,{time:0,travel:0,lane:0,x:0,y:0,vy:0,lionX:0,lionY:0,lionVy:0,lionZ:-3.2,hit:0,hits:0,hitSide:1,cheese:0,slowTime:0,nextSlow:1000,powerTime:0,powerDuration:0,speedLevel:0,speedBoost:0,speedTarget:0,speedNotice:0,ending:false,queue:0,nextRow:28,row:0,carSerial:Math.floor(rng()*CAR_MODELS.length),dust:0});
   run.nextRunner=32;run.runnerSerial=0;
   preparePickupMap();
+  resetGuideEvents();
   resetChessGame();
   run.objects.length=0;run.lionJumps.length=0;run.runners.length=0;run.particles.length=0;Object.assign(cameraState,{x:0,y:7.3,aimX:0,aimY:.65});
   for(let z=9;z<=17;z+=4)run.objects.push({type:'cheese',lane:0,z,used:false,phase:z});
@@ -914,7 +931,7 @@ function resetRun(){
   spawnSlowPickups();lastSlowHUD=-1;
   lastHUD='';lastPowerHUD='';lastSpeedHUD='';lastHearts=-1;syncHUD();
 }
-function startGame(){if(!$('loading-screen').hidden||!ready||contextLost)return;resetRun();screen('playing');unlockAudio();}
+function startGame(){if(!$('loading-screen').hidden||!ready||contextLost)return;resetRun();screen('playing');unlockAudio();showGuide('Я Левко. Біжи, збирай сир, а я попереджатиму про річку, небезпеку та випадкові події.','Левко · гід',6);}
 function pauseGame(){if(mode==='playing')screen('paused');}
 function resumeGame(){if(ready&&!contextLost){screen('playing');$('announce').textContent='Гру продовжено';}}
 function home(){resetRun();screen('menu');}
@@ -977,7 +994,7 @@ function collectCheese(o){
 
   const multiplier=comboMultiplierFor(run.combo);
   run.comboMultiplier=multiplier;
-  const gain=multiplier;
+  const gain=multiplier*(run.eventType==='doubleCheese'?2:1);
   run.cheese+=gain;
   totalCheese+=gain;
   run.comboBonus=(run.comboBonus||0)+(gain-1);
@@ -2594,7 +2611,78 @@ function updateExtrasHUD(){
   $('mission-hud').textContent=missions;
   if(run.extraKey!==text){$('extra-hud').textContent=text;run.extraKey=text;}$('extra-hud').hidden=false;
 }
+/* MYSHKA_GUIDE_EVENTS_V1 */
+const RUN_EVENTS=[
+  {id:'cheeseRain',name:'🧀 Сирний дощ',seconds:12,tip:'Сир сиплеться на всі смуги. Лови серію — це хороший момент для Combo Rush!'},
+  {id:'doubleCheese',name:'✨ Золотий час',seconds:15,tip:'Поки подія активна, кожен підібраний сир дає ×2.'},
+  {id:'powerRush',name:'⚡ Стежка бонусів',seconds:14,tip:'Попереду з’являться магніт, суперстрибок і щит. Обери траєкторію та збери максимум!'}
+];
+function guideEventGap(){return 1200+Math.floor(Math.random()*1001);}
+function hideGuide(){const card=$('guide-card');if(card)card.hidden=true;run.guideTime=0;}
+function showGuide(message,title='Левко · гід',seconds=5){
+  const card=$('guide-card');if(!card)return;
+  $('guide-name').textContent=title;$('guide-text').textContent=message;card.hidden=false;run.guideTime=seconds;
+}
+function resetGuideEvents(){
+  Object.assign(run,{eventType:'',eventName:'',eventTime:0,eventClock:0,eventWave:0,eventCount:0,lastEventType:'',nextEventMetres:900+Math.floor(Math.random()*701),guideTime:0,guideCrocWarned:0,guideLastLife:false});
+  const banner=$('event-banner'),card=$('guide-card');if(banner)banner.hidden=true;if(card)card.hidden=true;
+}
+function beginRunEvent(){
+  const choices=RUN_EVENTS.filter(e=>e.id!==run.lastEventType);
+  const ev=choices[Math.floor(Math.random()*choices.length)]||RUN_EVENTS[0];
+  run.eventType=ev.id;run.eventName=ev.name;run.eventTime=ev.seconds;run.eventClock=0;run.eventWave=0;run.eventCount=(run.eventCount||0)+1;run.lastEventType=ev.id;
+  const banner=$('event-banner');banner.hidden=false;banner.innerHTML='<strong>'+ev.name+'</strong> · '+ev.seconds+' с';
+  showGuide(ev.tip,'Левко · подія!',5.5);sound('bonus');
+  if(ev.id==='powerRush'){
+    spawnBonusPickup('magnet',run.travel+PLAYER_Z+34);
+    spawnBonusPickup('superjump',run.travel+PLAYER_Z+62);
+    spawnBonusPickup('shield',run.travel+PLAYER_Z+90);
+  }
+}
+function endRunEvent(){
+  const finished=run.eventName;
+  run.eventType='';run.eventName='';run.eventTime=0;run.eventClock=0;run.nextEventMetres=Math.floor(run.travel*1.8)+guideEventGap();
+  const banner=$('event-banner');if(banner)banner.hidden=true;
+  if(finished)showGuide('Подію завершено. Не розслабляйся — далі може бути річка, кейс або шаховий пішак.','Левко · гід',4);
+}
+function tickGuideEvents(dt){
+  if(run.guideTime>0){run.guideTime=Math.max(0,run.guideTime-dt);if(run.guideTime<=0)hideGuide();}
+  if(run.ending||mode!=='playing')return;
+  const metres=Math.floor(run.travel*1.8);
+  const nextCroc=Math.max(3000,Math.ceil((metres+1)/3000)*3000);
+  if(nextCroc-metres<=120&&nextCroc!==run.guideCrocWarned){
+    run.guideCrocWarned=nextCroc;
+    showGuide('Увага: приблизно через '+(nextCroc-metres)+' м річка з крокодилами. На воді стрибай тільки по крокодилах!','Левко · небезпека',6);
+  }
+  if(run.hits>=2&&!run.guideLastLife&&run.swapTime<=0){
+    run.guideLastLife=true;showGuide('Залишилось одне життя. Шукай щит або червоне серце й не ризикуй із перешкодами.','Левко · підказка',5.5);
+  }
+  if(run.eventTime>0){
+    run.eventTime=Math.max(0,run.eventTime-dt);run.eventClock+=dt;
+    const banner=$('event-banner');if(banner){banner.hidden=false;banner.innerHTML='<strong>'+run.eventName+'</strong> · '+Math.ceil(run.eventTime)+' с';}
+    if(run.eventType==='cheeseRain'){
+      while(run.eventClock>=.55){
+        run.eventClock-=.55;run.eventWave++;
+        const z=run.travel+PLAYER_Z+30+Math.min(18,run.eventWave*.7);
+        const lanes=run.eventWave%4===0?[-1,0,1]:[[-1,0,1][Math.floor(Math.random()*3)]];
+        for(const lane of lanes)run.objects.push({type:'cheese',lane,z:z+(lane+1)*.55,used:false,phase:run.eventWave});
+      }
+    }
+    if(run.eventTime<=0)endRunEvent();
+    return;
+  }
+  const crocMod=((metres%3000)+3000)%3000;
+  const crocNear=crocMod>2700||crocMod<180;
+  if(metres>=run.nextEventMetres){
+    if(crocNear){run.nextEventMetres=metres+260;return;}
+    beginRunEvent();
+  }
+}
+const guideCloseButton=$('guide-close');
+if(guideCloseButton)guideCloseButton.addEventListener('click',hideGuide);
+
 function tickExtras(dt){
+  tickGuideEvents(dt);
   run.magnetTime=Math.max(0,(run.magnetTime||0)-dt);run.shieldGrace=Math.max(0,(run.shieldGrace||0)-dt);
   if(run.comboTime>0){run.comboTime=Math.max(0,run.comboTime-dt);if(run.comboTime<=0)comboBreak();}
   if(run.toastTime>0){run.toastTime-=dt;if(run.toastTime<=0)$('reward-toast').hidden=true;}
