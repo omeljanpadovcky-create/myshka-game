@@ -369,6 +369,19 @@ button,.btn{filter:saturate(.82) brightness(.92);box-shadow:var(--toon-shadow)!i
 .skin-choice svg{transform:scale(1.03);transform-origin:center}
 @media(max-height:650px){#skin-preview{height:185px}}
 
+/* === MYSHKA_GESTURE_WARDROBE_V3 === */
+#touch-controls{display:none!important;visibility:hidden!important;pointer-events:none!important}
+#gesture-tutorial{z-index:11}
+#gesture-tutorial.show .gesture-hand{will-change:transform}
+#skins.accessory-mode #skin-preview{
+  background:
+    radial-gradient(circle at 50% 27%,#d6efc86b 0%,#85bd9d31 34%,transparent 51%),
+    radial-gradient(ellipse at 50% 79%,#6c9c78a8 0%,#245a49ec 53%,#0b302bf9 100%);
+  box-shadow:inset 0 0 0 1px #ffffff22,0 18px 38px #051b1755,0 0 34px #dff0b326
+}
+#skins.accessory-mode #skin-name{color:#ffe5aa}
+@media(prefers-reduced-motion:reduce){#gesture-tutorial.show .gesture-hand{transform:none!important}}
+
 </style>
 </head>
 <body>
@@ -1805,7 +1818,7 @@ function tickSwap(dt){
 function mouseModel(clock,giant=false){
   const standing=mode==='skins',x=standing?0:run.x,y=standing?0:run.y,vy=standing?0:run.vy,hit=standing?0:run.hit;
   const escape=standing||giant?0:lionPounceAmount(),mouseZ=PLAYER_Z+escape*.16;
-  if(standing){clock=0;add('disc',0,.001,PLAYER_Z,.88,1,1.15,SKIN_PLATFORM);}
+  if(standing){add('disc',0,.001,PLAYER_Z,.92,1,1.20,SKIN_PLATFORM);}
   shadow(x,mouseZ,.65+y*.07,1.03);
   if(!standing&&!giant&&run.powerTime>0)for(let i=0;i<4;i++){
     const a=clock*2+i*Math.PI/2;
@@ -1815,7 +1828,10 @@ function mouseModel(clock,giant=false){
   const turn=standing||giant?0:clamp((run.lane*2.6-x)*.12,-.18,.18);
   const age=HIT_TIME-hit,env=hit>0?Math.sin(Math.PI*clamp(age/.7,0,1)):0;
   const roll=hit>0?run.hitSide*Math.sin(age*15)*.25*env:0,pitch=hit>0?Math.sin(Math.PI*clamp(age/.4,0,1))*.17:0;
-  beginGroup(x,y+bob+env*.13+escape*.025,mouseZ-(hit>0?Math.sin(Math.PI*clamp(age/.45,0,1))*.23:0),pitch-clamp(vy*.012,-.07,.085)*tuck-escape*.045,roll-turn*.10,turn);
+  const wardrobeBob=standing?Math.sin(clock*1.35)*.018:0;
+  const wardrobeYaw=standing?Math.sin(clock*.55)*.085-.045:turn;
+  const wardrobeRoll=standing?Math.sin(clock*.9)*.012:roll-turn*.10;
+  beginGroup(x,y+bob+wardrobeBob+env*.13+escape*.025,mouseZ-(hit>0?Math.sin(Math.PI*clamp(age/.45,0,1))*.23:0),standing?-.015+Math.sin(clock*.72)*.012:pitch-clamp(vy*.012,-.07,.085)*tuck-escape*.045,wardrobeRoll,wardrobeYaw);
   add('mouseBody',0,standing?.035:0,0,standing?1.04:1,standing?1.03:1,standing?.98:1,WHITE);
   mouseExtras(standing,clock);
   if(standing){
@@ -1829,10 +1845,10 @@ function mouseModel(clock,giant=false){
   }else{
     for(const side of [-1,1])for(const front of [false,true])animalLeg(side,front,gait,bob,true,tuck,false);
   }
-  const headY=standing?.86:.77,headZ=standing?.63:.60+escape*.035,headScale=standing?1.18:1;
-  add('mouseHead',0,headY,headZ,headScale,standing?1.10:1,headScale,WHITE,standing?-.018:giant?0:Math.sin(gait)*.018*(1-tuck)-escape*.035,turn*.32,0);
+  const headY=standing?.89:.77,headZ=standing?.66:.60+escape*.035,headScale=standing?1.23:1;
+  add('mouseHead',0,headY,headZ,headScale,standing?1.14:1,headScale,WHITE,standing?-.026+Math.sin(clock*.9)*.014:giant?0:Math.sin(gait)*.018*(1-tuck)-escape*.035,standing?Math.sin(clock*.62)*.045:turn*.32,standing?Math.sin(clock*.78)*.012:0);
   // Extra face detail keeps the Mouse readable on a phone-sized screen.
-  const faceZ=standing?1.245:1.18;
+  const faceZ=standing?1.31:1.18;
   skinPart(0,headY,faceZ,standing?.083:.075,standing?.070:.065,standing?.083:.075,ANIMAL.nose);
   if(options.quality!=='low')for(const side of [-1,1])for(const dy of [-.035,.035])
     bone(side*.055,headY+.02+dy,faceZ-.06,side*.54,headY+.04+dy,faceZ+.12,.009,ANIMAL.whisker);
@@ -2532,9 +2548,9 @@ function render(){
     const r=$('skin-preview').getBoundingClientRect(),a=app.getBoundingClientRect(),sx=canvas.width/app.clientWidth,sy=canvas.height/app.clientHeight;
     const w=Math.max(1,Math.round((r.right-r.left)*sx)),h=Math.max(1,Math.round((r.bottom-r.top)*sy));
     gl.viewport(Math.round((r.left-a.left)*sx),Math.round(canvas.height-(r.bottom-a.top)*sy),w,h);
-    perspective(projection,.75*Math.max(1,1.55/(w/h)),w/h,.15,30);eye.set([1.04,1.43,3.58]);target.set([0,.80,.50]);
+    perspective(projection,.71*Math.max(1,1.50/(w/h)),w/h,.15,30);eye.set([.88,1.40,3.48]);target.set([0,.84,.53]);
     lookAt(view,eye,target);multiply(vp,projection,view);updateTheme();theme.fog.set(SKIN_BACKDROP);
-    clearInstances();mouseModel(0);flush();frameCost=performance.now()-start;dirty=false;return;
+    clearInstances();mouseModel(menuClock);flush();frameCost=performance.now()-start;dirty=false;return;
   }
   gl.viewport(0,0,canvas.width,canvas.height);
   eye[0]=cameraState.x;eye[1]=cameraState.y;eye[2]=-14.5;
@@ -3181,10 +3197,24 @@ document.addEventListener('pointerdown',()=>{if(menuMusicAllowed()&&menuMusicEna
 refreshMenuMusicUI();
 
 bindPress('help-open',()=>screen('help'));bindPress('help-back',()=>screen('menu'));
+function wardrobeAccessoryMode(){return !$('accessory-shop').hidden;}
+function updateWardrobePreviewLabel(){
+  const preview=$('skin-preview');
+  if(wardrobeAccessoryMode()){
+    const item=ACCESSORIES.find(a=>a.id===accessory),label=accessory==='none'?'Мишка без аксесуара':(item?.label||'Аксесуар');
+    $('skin-name').textContent=label;
+    preview.setAttribute('aria-label','3D-перегляд аксесуара: '+label);
+  }else{
+    const skin=MOUSE_SKINS.find(s=>s.id===options.skin)||MOUSE_SKINS[0];
+    $('skin-name').textContent=skin.name;
+    preview.setAttribute('aria-label','3D-перегляд скіна: '+skin.name);
+  }
+}
 function showWardrobe(accessories){
   $('skin-cards').hidden=accessories;$('accessory-shop').hidden=!accessories;
+  $('skins').classList.toggle('accessory-mode',accessories);
   $('wardrobe-skins').setAttribute('aria-pressed',String(!accessories));$('wardrobe-accessories').setAttribute('aria-pressed',String(accessories));
-  refreshSkinLocks();dirty=true;
+  refreshSkinLocks();updateWardrobePreviewLabel();dirty=true;
 }
 function refreshAccessoryCards(){
   for(const a of ACCESSORIES){
@@ -3197,6 +3227,7 @@ function refreshAccessoryCards(){
   }
   $('accessory-equipped').textContent=accessory==='none'?'Обери аксесуар для своєї Мишки':'Одягнено: '+ACCESSORIES.find(a=>a.id===accessory).label;
   $('accessory-remove').hidden=accessory==='none';
+  updateWardrobePreviewLabel();
 }
 bindPress('wardrobe-skins',()=>showWardrobe(false));bindPress('wardrobe-accessories',()=>showWardrobe(true));
 for(const a of ACCESSORIES)bindPress('accessory-get-'+a.id,()=>buyAccessory(a.id));
@@ -3234,8 +3265,8 @@ function selectSkin(id,persist=true){
     for(const name of ['mouseBody','mouseHead']){gl.bindBuffer(gl.ARRAY_BUFFER,meshes[name].geometry);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(geometry[name]),gl.STATIC_DRAW);}
   }
   for(const choice of MOUSE_SKINS)$('skin-'+choice.id).setAttribute('aria-pressed',String(choice.id===skin.id));
-  $('skin-current').textContent=skin.name;$('skin-name').textContent=skin.name;
-  $('skin-preview').setAttribute('aria-label','3D-перегляд: '+skin.name);
+  $('skin-current').textContent=skin.name;
+  updateWardrobePreviewLabel();
   if(persist)try{localStorage.setItem('myshka-skin',skin.id);}catch{}
   dirty=true;
 }
@@ -3303,6 +3334,7 @@ function frame(now){
   }else{
     accumulator=0;
     if(mode==='menu'){menuClock+=elapsed*.55;if(now-lastPaint>1000/24){render();lastPaint=now;}}
+    else if(mode==='skins'){menuClock+=elapsed*.70;if(dirty||now-lastPaint>1000/24){render();lastPaint=now;}}
     else if(dirty){render();lastPaint=now;}
   }
   requestAnimationFrame(frame);
