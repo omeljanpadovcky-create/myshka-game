@@ -1002,7 +1002,7 @@ const seasons=[
   {name:'Ніч світлячків',fog:C('18344c'),ground:C('274f49'),leaf:C('2d6654'),trail:C('688d95')}
 ];
 const theme={name:'Літній ліс',fog:new Float32Array(3),ground:new Float32Array(3),leaf:new Float32Array(3),trail:new Float32Array(3),snow:0,autumn:0};
-let mode='menu',settingsReturn='menu',menuClock=0,seed=1,lastPointerAction=-1000;
+let mode='menu',settingsReturn='menu',menuClock=0,seed=1,lastPointerAction=-1000,lastPointerButton=null;
 let menuMusicEnabled=true,menuMusicVolume=.35,menuMusicUnlocked=false;
 try{
   const mm=JSON.parse(localStorage.getItem('myshka-menu-music')||'null');
@@ -1083,6 +1083,7 @@ function screen(name){
   clearInput();
   if(name!=='playing'){const cm=$('chess-modal'),cc=$('chess-countdown');if(cm)cm.hidden=true;if(cc)cc.hidden=true;}
   mode=name;dirty=true;$('runner-thoughts').hidden=name!=='playing';
+  if(name==='playing')hideMenuLevko();
   if(name==='quests')refreshQuests();
   if(name==='paused')refreshPauseMissions();
   if(name==='exchange'){$('exchange-result').textContent='';refreshExchange();}
@@ -2652,13 +2653,13 @@ function bindPress(id,action,immediate=false){
   buttonResets.push(release);
   b.addEventListener('pointerdown',e=>{
     if(b.disabled||held||(e.pointerType==='mouse'&&e.button!==0))return;
-    e.preventDefault();lastPointerAction=performance.now();held={id:e.pointerId,mode};b.classList.add('pressed');
+    e.preventDefault();lastPointerAction=performance.now();lastPointerButton=b;held={id:e.pointerId,mode};b.classList.add('pressed');
     try{b.setPointerCapture(e.pointerId);}catch{}
     if(immediate)action();
   });
   b.addEventListener('pointerup',e=>{
     if(held?.id!==e.pointerId)return;
-    e.preventDefault();lastPointerAction=performance.now();const press=held;release();
+    e.preventDefault();lastPointerAction=performance.now();lastPointerButton=b;const press=held;release();
     const r=b.getBoundingClientRect(),inside=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;
     if(!immediate&&!b.disabled&&inside&&press.mode===mode)action();
   });
@@ -2668,7 +2669,8 @@ function bindPress(id,action,immediate=false){
 }
 // Ignore only the duplicate click after a pointer action; retain keyboard and assistive clicks.
 document.addEventListener('click',e=>{
-  if((e.detail>0||e.pointerType==='touch')&&performance.now()-lastPointerAction<700&&e.target.closest('button')){e.preventDefault();e.stopImmediatePropagation();}
+  const button=e.target?.closest?.('button');
+  if(button&&button===lastPointerButton&&(e.detail>0||e.pointerType==='touch')&&performance.now()-lastPointerAction<700){e.preventDefault();e.stopImmediatePropagation();}
 },true);
 bindPress('left',()=>changeLane(-1),true);bindPress('right',()=>changeLane(1),true);bindPress('jump',jump,true);
 let gesture=null;
@@ -2682,8 +2684,8 @@ canvas.addEventListener('pointermove',e=>{
   const x=e.clientX-gesture.x,y=e.clientY-gesture.y;
   if(Math.max(Math.abs(x),Math.abs(y))<23)return;
   if(Math.abs(x)>Math.abs(y)){changeLane(x>0?1:-1);gesture.done=true;hideGestureTutorial();}
-  else if(y<0){jump();gesture.done=true;hideGestureTutorial();}
-  else gesture.done=true;
+  else if(y<=-23){jump();gesture.done=true;hideGestureTutorial();}
+  else if(y>=42)gesture.done=true;
 });
 canvas.addEventListener('pointerup',e=>{if(gesture&&e.pointerId===gesture.id){if(!gesture.done&&mode==='playing'){jump();hideGestureTutorial();}gesture=null;}});
 canvas.addEventListener('pointercancel',()=>{gesture=null;});
@@ -2880,36 +2882,35 @@ function wheelSkinReward(){
 function spinFortuneWheel(){
   if(wheelBusy||totalCheese<WHEEL_COST)return;
   wheelBusy=true;totalCheese-=WHEEL_COST;wheelSpins++;
-  saveWallet();refreshSkinLocks();refreshWheel();
+
+  const index=Math.floor(Math.random()*WHEEL_REWARDS.length);
+  const reward=WHEEL_REWARDS[index];
+  let result;
+  if(reward.kind==='cheese'){
+    totalCheese+=reward.value;
+    result={title:'🧀 +'+reward.value+' сиру!',sub:'Додано до балансу.'};
+  }else if(reward.kind==='accessory'){
+    result=wheelAccessoryReward();
+  }else{
+    result=wheelSkinReward();
+  }
+  // Persist the prize before the animation, so reload/close cannot eat the spin cost.
+  saveWallet();refreshSkinLocks();refreshExchange();refreshWheel();
 
   $('wheel-result-title').textContent='Колесо крутиться…';
   $('wheel-result-sub').textContent='Мишка чекає нагороду 😅';
 
-  const index=Math.floor(Math.random()*WHEEL_REWARDS.length);
-  const slice=45,target=360-(index*slice+slice/2);
+  const slice=360/WHEEL_REWARDS.length,target=360-(index*slice+slice/2);
   const current=((wheelAngle%360)+360)%360;
   wheelAngle+=1080+((target-current+360)%360);
   $('fortune-wheel').style.transform='rotate('+wheelAngle+'deg)';
 
   setTimeout(()=>{
-    const reward=WHEEL_REWARDS[index];
-    let result;
-    if(reward.kind==='cheese'){
-      totalCheese+=reward.value;
-      result={title:'🧀 +'+reward.value+' сиру!',sub:'Додано до балансу.'};
-    }else if(reward.kind==='accessory'){
-      result=wheelAccessoryReward();
-    }else{
-      result=wheelSkinReward();
-    }
-
-    saveWallet();refreshSkinLocks();refreshExchange();
     $('wheel-result-title').textContent=result.title;
     $('wheel-result-sub').textContent=result.sub;
     wheelBusy=false;refreshWheel();
   },2300);
 }
-
 function updateAccessoryButton(){
   const id=$('reward-choice').value,item=ACCESSORIES.find(a=>a.id===id),owned=!item||ownedAccessories.has(id),b=$('accessory-buy');
   b.disabled=!owned&&(item.caseOnly||totalCheese<item.required);
@@ -3225,7 +3226,9 @@ function refreshAccessoryCards(){
     button.textContent=equipped?'Вибрано':owned?'Одягнути':a.caseOnly?'Лише з кейса':button.disabled?'Бракує '+(a.required-totalCheese)+' 🧀':'Купити';
     button.setAttribute('aria-label',a.label+'. '+button.textContent+(owned||a.caseOnly?'':' за '+a.required+' сиру'));
   }
-  $('accessory-equipped').textContent=accessory==='none'?'Обери аксесуар для своєї Мишки':'Одягнено: '+ACCESSORIES.find(a=>a.id===accessory).label;
+  let equippedItem=ACCESSORIES.find(a=>a.id===accessory);
+  if(accessory!=='none'&&!equippedItem){accessory='none';saveExtras();equippedItem=null;}
+  $('accessory-equipped').textContent=accessory==='none'?'Обери аксесуар для своєї Мишки':'Одягнено: '+equippedItem.label;
   $('accessory-remove').hidden=accessory==='none';
   updateWardrobePreviewLabel();
 }
@@ -3285,7 +3288,7 @@ for(const id of Object.keys(SOCIAL_LINKS))bindPress('social-'+id,()=>visitSocial
 refreshSocialButtons();
 bindPress('wheel-open',()=>screen('wheel'));bindPress('wheel-back',()=>screen('menu'));bindPress('wheel-spin',spinFortuneWheel);
 bindPress('exchange-open',()=>screen('exchange'));bindPress('exchange-back',()=>screen('menu'));bindPress('exchange-buy',exchangeCheese);bindPress('exchange-use',openExchangeCase);
-bindPress('skins-open',()=>{refreshSkinLocks();screen('skins');});bindPress('skins-back',()=>screen('menu'));
+bindPress('skins-open',()=>{showWardrobe(false);screen('skins');});bindPress('skins-back',()=>screen('menu'));
 bindPress('upgrades-open',()=>{refreshUpgrades();$('upgrade-result').textContent='';screen('upgrades');});bindPress('upgrades-back',()=>screen('menu'));
 for(const id of Object.keys(BASE_ITEM_SECONDS))bindPress('upgrade-'+id,()=>upgradeTimedItem(id));
 $('screens').addEventListener('scroll',()=>{if(mode==='skins')dirty=true;},{passive:true});
